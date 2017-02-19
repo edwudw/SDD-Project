@@ -155,3 +155,11 @@ FillStyle = vbSolid
 Line (1675, 6225)-(8000, 2025), vbBlack, B
 End Sub
 
+Private Sub Form_Load()
+Dim excelApp As Excel.Application
+Dim excelWB As Excel.Workbook
+Set excelApp = CreateObject("Excel Application")
+Set excelWB = excelApp.Workbooks.Add
+excelApp.Visible = True
+
+End Sub
