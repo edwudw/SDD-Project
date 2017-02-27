@@ -9,6 +9,23 @@ Begin VB.Form Form1
    ScaleHeight     =   8685
    ScaleWidth      =   17295
    StartUpPosition =   3  'Windows Default
+   Begin VB.PictureBox Image1 
+      Height          =   4695
+      Left            =   3960
+      ScaleHeight     =   4635
+      ScaleWidth      =   11715
+      TabIndex        =   2
+      Top             =   960
+      Width           =   11775
+   End
+   Begin VB.CommandButton Command2 
+      Caption         =   "Command1"
+      Height          =   615
+      Left            =   11760
+      TabIndex        =   1
+      Top             =   6720
+      Width           =   1695
+   End
    Begin VB.CommandButton button 
       Caption         =   "Start"
       Height          =   495
@@ -150,16 +167,26 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub button_Click()
-FillColor = vbBlack
-FillStyle = vbSolid
-Line (1675, 6225)-(8000, 2025), vbBlack, B
+Dim xlApp As excel.Application
+Set xlApp = New excel.Application
+Dim xlWkb As excel.Workbook
+Set xlWkb = xlApp.Workbooks.Open("D:\Documents\Book1.xlsx")
+Dim xlSht As excel.Worksheet
+Set xlSht = xlWkb.Worksheets(1)
+Dim xlChart As excel.Chart
+Set xlChart = xlWkb.Charts.Add
+xlChart.ChartType = xlLine
+xlChart.SetSourceData xlSht.Range("A1:B5"), xlColumns
+xlChart.Visible = xlSheetVisible
+xlChart.Legend.Clear
+xlChart.
+xlChart.ChartArea.Font.Size = 15
+xlChart.ChartArea.Font.Color = vbRed
+xlChart.ChartArea.Select
+xlChart.ChartArea.Copy
+Image1.Picture = Clipboard.GetData(vbCFBitmap)
 End Sub
 
 Private Sub Form_Load()
-Dim excelApp As Excel.Application
-Dim excelWB As Excel.Workbook
-Set excelApp = CreateObject("Excel Application")
-Set excelWB = excelApp.Workbooks.Add
-excelApp.Visible = True
 
 End Sub
