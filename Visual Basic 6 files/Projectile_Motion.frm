@@ -1,164 +1,71 @@
 VERSION 5.00
 Begin VB.Form Form1 
    Caption         =   "Form1"
-   ClientHeight    =   8685
+   ClientHeight    =   10875
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   17295
+   ClientWidth     =   20535
    LinkTopic       =   "Form1"
-   ScaleHeight     =   8685
-   ScaleWidth      =   17295
+   ScaleHeight     =   10875
+   ScaleWidth      =   20535
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command1 
+      Caption         =   "Start"
+      Height          =   735
+      Left            =   17760
+      TabIndex        =   1
+      Top             =   9960
+      Width           =   1815
+   End
    Begin VB.PictureBox Image1 
+      AutoSize        =   -1  'True
       Height          =   4695
-      Left            =   3960
+      Left            =   600
       ScaleHeight     =   4635
       ScaleWidth      =   11715
-      TabIndex        =   2
-      Top             =   960
+      TabIndex        =   0
+      Top             =   240
       Width           =   11775
    End
-   Begin VB.CommandButton Command2 
-      Caption         =   "Command1"
-      Height          =   615
-      Left            =   11760
-      TabIndex        =   1
-      Top             =   6720
-      Width           =   1695
-   End
-   Begin VB.CommandButton button 
-      Caption         =   "Start"
+   Begin VB.Label yVelocityLabel 
+      Caption         =   "Y Component of Initial Velocity (Uy)"
       Height          =   495
-      Left            =   14160
-      TabIndex        =   0
-      Top             =   6720
+      Left            =   17160
+      TabIndex        =   6
+      Top             =   3840
       Width           =   1575
    End
-   Begin VB.Line Line9 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   575
-      Y2              =   575
+   Begin VB.Label xVelocityLabel 
+      Caption         =   "X Component of Initial Velocity (Ux)"
+      Height          =   495
+      Left            =   17160
+      TabIndex        =   5
+      Top             =   3000
+      Width           =   1335
    End
-   Begin VB.Line Line8 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   1225
-      Y2              =   1225
+   Begin VB.Label velocityLabel 
+      Caption         =   "Initial Velocity"
+      Height          =   495
+      Left            =   17160
+      TabIndex        =   4
+      Top             =   2280
+      Width           =   1215
    End
-   Begin VB.Line Line7 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   1850
-      Y2              =   1850
+   Begin VB.Label rangeLabel 
+      Caption         =   "Range"
+      Height          =   375
+      Left            =   17160
+      TabIndex        =   3
+      Top             =   1560
+      Width           =   735
    End
-   Begin VB.Line Line6 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   2475
-      Y2              =   2475
-   End
-   Begin VB.Line Line5 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   3100
-      Y2              =   3100
-   End
-   Begin VB.Line Line4 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   3725
-      Y2              =   3725
-   End
-   Begin VB.Line Line3 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   4350
-      Y2              =   4350
-   End
-   Begin VB.Line Line2 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   4975
-      Y2              =   4975
-   End
-   Begin VB.Line Line1 
-      X1              =   1445
-      X2              =   1575
-      Y1              =   5600
-      Y2              =   5600
-   End
-   Begin VB.Line xLine0 
-      X1              =   1560
-      X2              =   1560
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine9 
-      X1              =   7200
-      X2              =   7200
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine8 
-      X1              =   6575
-      X2              =   6575
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine7 
-      X1              =   5950
-      X2              =   5950
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine6 
-      X1              =   5325
-      X2              =   5325
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine5 
-      X1              =   4700
-      X2              =   4700
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine4 
-      X1              =   4075
-      X2              =   4075
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine3 
-      X1              =   3450
-      X2              =   3450
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine2 
-      X1              =   2825
-      X2              =   2825
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xLine1 
-      X1              =   2200
-      X2              =   2200
-      Y1              =   6250
-      Y2              =   6380
-   End
-   Begin VB.Line xAxisLine 
-      X1              =   7200
-      X2              =   1560
-      Y1              =   6240
-      Y2              =   6240
-   End
-   Begin VB.Line yAxisLine 
-      X1              =   1560
-      X2              =   1560
-      Y1              =   600
-      Y2              =   6240
+   Begin VB.Label timeLabel 
+      Caption         =   "Time"
+      Height          =   255
+      Left            =   17160
+      TabIndex        =   2
+      Top             =   600
+      Width           =   615
    End
 End
 Attribute VB_Name = "Form1"
@@ -166,7 +73,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private Sub button_Click()
+
+Private Sub Command1_Click()
 Dim xlApp As excel.Application
 Set xlApp = New excel.Application
 Dim xlWkb As excel.Workbook
@@ -179,14 +87,14 @@ xlChart.ChartType = xlLine
 xlChart.SetSourceData xlSht.Range("A1:B5"), xlColumns
 xlChart.Visible = xlSheetVisible
 xlChart.Legend.Clear
-xlChart.
-xlChart.ChartArea.Font.Size = 15
+xlChart.ChartArea.Font.Size = 10
 xlChart.ChartArea.Font.Color = vbRed
+Dim i As Long
+For i = 1 To xlChart.FullSeriesCollection.Count
+    xlChart.FullSeriesCollection(i).Smooth = True
+Next
+
 xlChart.ChartArea.Select
 xlChart.ChartArea.Copy
 Image1.Picture = Clipboard.GetData(vbCFBitmap)
-End Sub
-
-Private Sub Form_Load()
-
 End Sub
