@@ -1,14 +1,77 @@
 VERSION 5.00
 Begin VB.Form Form1 
-   Caption         =   "Form1"
    ClientHeight    =   10875
-   ClientLeft      =   120
-   ClientTop       =   465
-   ClientWidth     =   20535
+   ClientLeft      =   225
+   ClientTop       =   570
+   ClientWidth     =   13260
    LinkTopic       =   "Form1"
    ScaleHeight     =   10875
-   ScaleWidth      =   20535
+   ScaleWidth      =   13260
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox Output 
+      Height          =   855
+      Left            =   15120
+      TabIndex        =   18
+      Text            =   "Text1"
+      Top             =   9720
+      Width           =   2055
+   End
+   Begin VB.TextBox angleBox 
+      Height          =   495
+      Left            =   18840
+      TabIndex        =   17
+      Top             =   6240
+      Width           =   975
+   End
+   Begin VB.TextBox timeSpecificBox 
+      Height          =   495
+      Left            =   18840
+      TabIndex        =   15
+      Top             =   5520
+      Width           =   975
+   End
+   Begin VB.TextBox ySpecificVeloBox 
+      Height          =   495
+      Left            =   18840
+      TabIndex        =   14
+      Top             =   4680
+      Width           =   975
+   End
+   Begin VB.TextBox yVelocityBox 
+      Height          =   495
+      Left            =   18840
+      TabIndex        =   13
+      Top             =   3840
+      Width           =   975
+   End
+   Begin VB.TextBox xVelocityBox 
+      Height          =   615
+      Left            =   18840
+      TabIndex        =   12
+      Top             =   3000
+      Width           =   975
+   End
+   Begin VB.TextBox initVeloBox 
+      Height          =   495
+      Left            =   18840
+      TabIndex        =   11
+      Top             =   2280
+      Width           =   975
+   End
+   Begin VB.TextBox rangeBox 
+      Height          =   495
+      Left            =   18840
+      TabIndex        =   10
+      Top             =   1560
+      Width           =   975
+   End
+   Begin VB.TextBox timeBox 
+      Height          =   495
+      Left            =   18840
+      TabIndex        =   9
+      Top             =   600
+      Width           =   975
+   End
    Begin VB.CommandButton Command1 
       Caption         =   "Start"
       Height          =   735
@@ -26,6 +89,30 @@ Begin VB.Form Form1
       TabIndex        =   0
       Top             =   240
       Width           =   11775
+   End
+   Begin VB.Label angleLabel 
+      Caption         =   "Angle above Horizontal which Projectile was fired"
+      Height          =   615
+      Left            =   17160
+      TabIndex        =   16
+      Top             =   6240
+      Width           =   1575
+   End
+   Begin VB.Label timeSpecificLabel 
+      Caption         =   "Time at Velocity Above"
+      Height          =   495
+      Left            =   17160
+      TabIndex        =   8
+      Top             =   5640
+      Width           =   1695
+   End
+   Begin VB.Label ySpecificVelocityLabel 
+      Caption         =   "Y Comoponent of velocity at time below (Vy)"
+      Height          =   615
+      Left            =   17160
+      TabIndex        =   7
+      Top             =   4680
+      Width           =   1575
    End
    Begin VB.Label yVelocityLabel 
       Caption         =   "Y Component of Initial Velocity (Uy)"
@@ -75,6 +162,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Private Sub Command1_Click()
+
+Call Algorithms
 Dim xlApp As excel.Application
 Set xlApp = New excel.Application
 Dim xlWkb As excel.Workbook
@@ -97,4 +186,24 @@ Next
 xlChart.ChartArea.Select
 xlChart.ChartArea.Copy
 Image1.Picture = Clipboard.GetData(vbCFBitmap)
+End Sub
+
+Private Sub Algorithms()
+Dim timeSpecific As Single
+Dim initVelo As Single
+Dim angle As Single
+Dim xVelocity As Single
+Dim yVelocity As Single
+Dim ySpecificVelocity As Single
+Dim overallVelocity As Single
+timeSpecific = timeSpecificBox.Text
+initVelo = initVeloBox.Text
+angle = angleBox.Text
+
+xVelocity = initVelo * Math.Cos((angle / 180) * 3.14159265358979)
+yVelocity = initVelo * Math.Sin((angle / 180) * 3.14159265358979)
+
+ySpecificVelocity = yVelocity + (-9.8 * timeSpecific)
+overallVelocity = ((ySpecificVelocity) ^ 2 + (xVelocity) ^ 2) ^ (1 / 2)
+Output.Text = CStr(overallVelocity)
 End Sub
