@@ -8,6 +8,13 @@ Begin VB.Form Form1
    ScaleHeight     =   10875
    ScaleWidth      =   13260
    StartUpPosition =   3  'Windows Default
+   Begin VB.TextBox heightBox 
+      Height          =   495
+      Left            =   18840
+      TabIndex        =   20
+      Top             =   6840
+      Width           =   975
+   End
    Begin VB.TextBox Output 
       Height          =   855
       Left            =   15120
@@ -90,6 +97,14 @@ Begin VB.Form Form1
       Top             =   240
       Width           =   11775
    End
+   Begin VB.Label heightLabel 
+      Caption         =   "Height"
+      Height          =   615
+      Left            =   17160
+      TabIndex        =   19
+      Top             =   6960
+      Width           =   1575
+   End
    Begin VB.Label angleLabel 
       Caption         =   "Angle above Horizontal which Projectile was fired"
       Height          =   615
@@ -163,7 +178,7 @@ Attribute VB_Exposed = False
 
 Private Sub Command1_Click()
 
-Call Algorithms
+Call Algorithms2
 Dim xlApp As excel.Application
 Set xlApp = New excel.Application
 Dim xlWkb As excel.Workbook
@@ -173,7 +188,7 @@ Set xlSht = xlWkb.Worksheets(1)
 Dim xlChart As excel.Chart
 Set xlChart = xlWkb.Charts.Add
 xlChart.ChartType = xlLine
-xlChart.SetSourceData xlSht.Range("A1:B5"), xlColumns
+xlChart.SetSourceData xlSht.range("A1:B5"), xlColumns
 xlChart.Visible = xlSheetVisible
 xlChart.Legend.Clear
 xlChart.ChartArea.Font.Size = 10
@@ -196,7 +211,8 @@ Dim xVelocity As Single
 Dim yVelocity As Single
 Dim ySpecificVelocity As Single
 Dim overallVelocity As Single
-timeSpecific = timeSpecificBox.Text
+
+timeSpecific = timeSpecificBox.Text ' CHECK THIS LATER
 initVelo = initVeloBox.Text
 angle = angleBox.Text
 
@@ -206,4 +222,31 @@ yVelocity = initVelo * Math.Sin((angle / 180) * 3.14159265358979)
 ySpecificVelocity = yVelocity + (-9.8 * timeSpecific)
 overallVelocity = ((ySpecificVelocity) ^ 2 + (xVelocity) ^ 2) ^ (1 / 2)
 Output.Text = CStr(overallVelocity)
+End Sub
+
+Private Sub Algorithms2()
+Dim timeSpecific As Single
+Dim initVelo As Single
+Dim angle As Single
+Dim xVelocity As Single
+Dim yVelocity As Single
+Dim ySpecificVelocity As Single
+Dim overallVelocity As Single
+Dim height As Single
+Dim timeSpecific2 As Single
+Dim maxHeight As Single
+Dim time As Single
+Dim range As Single
+
+height = heightBox.Text
+initVelo = initVeloBox.Text
+angle = angleBox.Text
+xVelocity = initVelo * Math.Cos((angle / 180) * 3.14159265358979)
+yVelocity = initVelo * Math.Sin((angle / 180) * 3.14159265358979)
+maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
+timeSpecific = yVelocity / 9.8
+timeSpecific2 = (maxHeight / (0.5 * 9.8)) ^ (1 / 2)
+time = timeSpecific + timeSpecific2
+range = xVelocity * time
+Output.Text = CStr(range)
 End Sub
