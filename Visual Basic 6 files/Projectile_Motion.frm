@@ -3,15 +3,16 @@ Begin VB.Form Form1
    ClientHeight    =   10875
    ClientLeft      =   225
    ClientTop       =   570
-   ClientWidth     =   13260
+   ClientWidth     =   12825
    LinkTopic       =   "Form1"
-   ScaleHeight     =   10875
-   ScaleWidth      =   13260
+   ScaleHeight     =   12915
+   ScaleWidth      =   23760
    StartUpPosition =   3  'Windows Default
    Begin VB.TextBox maxHeightBox 
       Height          =   375
       Left            =   18840
       TabIndex        =   24
+      Text            =   "0"
       Top             =   8160
       Width           =   975
    End
@@ -19,6 +20,7 @@ Begin VB.Form Form1
       Height          =   615
       Left            =   18840
       TabIndex        =   22
+      Text            =   "0"
       Top             =   7440
       Width           =   975
    End
@@ -26,6 +28,7 @@ Begin VB.Form Form1
       Height          =   495
       Left            =   18840
       TabIndex        =   20
+      Text            =   "0"
       Top             =   6840
       Width           =   975
    End
@@ -41,6 +44,7 @@ Begin VB.Form Form1
       Height          =   495
       Left            =   18840
       TabIndex        =   17
+      Text            =   "0"
       Top             =   6240
       Width           =   975
    End
@@ -48,6 +52,7 @@ Begin VB.Form Form1
       Height          =   495
       Left            =   18840
       TabIndex        =   15
+      Text            =   "0"
       Top             =   5520
       Width           =   975
    End
@@ -55,6 +60,7 @@ Begin VB.Form Form1
       Height          =   495
       Left            =   18840
       TabIndex        =   14
+      Text            =   "0`"
       Top             =   4680
       Width           =   975
    End
@@ -62,6 +68,7 @@ Begin VB.Form Form1
       Height          =   495
       Left            =   18840
       TabIndex        =   13
+      Text            =   "0"
       Top             =   3840
       Width           =   975
    End
@@ -69,6 +76,7 @@ Begin VB.Form Form1
       Height          =   615
       Left            =   18840
       TabIndex        =   12
+      Text            =   "0"
       Top             =   3000
       Width           =   975
    End
@@ -76,6 +84,7 @@ Begin VB.Form Form1
       Height          =   495
       Left            =   18840
       TabIndex        =   11
+      Text            =   "0"
       Top             =   2280
       Width           =   975
    End
@@ -83,6 +92,7 @@ Begin VB.Form Form1
       Height          =   495
       Left            =   18840
       TabIndex        =   10
+      Text            =   "0"
       Top             =   1560
       Width           =   975
    End
@@ -90,6 +100,7 @@ Begin VB.Form Form1
       Height          =   495
       Left            =   18840
       TabIndex        =   9
+      Text            =   "0"
       Top             =   600
       Width           =   975
    End
@@ -208,7 +219,9 @@ Attribute VB_Exposed = False
 
 Private Sub Command1_Click()
 
-Call Algorithms6
+
+
+Call Algorithms4
 Dim xlApp As excel.Application
 Set xlApp = New excel.Application
 Dim xlWkb As excel.Workbook
@@ -393,17 +406,19 @@ Dim divisor As Single
 Dim heightEnd As Single
 Dim heightDiff As Single
 Dim angleR As Single
+Dim test As Single
 
 range = rangeBox.Text
 height = heightBox.Text
 angle = angleBox.Text
 heightDiff = heightEnd - height
 angleR = (angle / 180) * 3.14159265358979
-initVelo = Math.Sqr((0.5 * -9.8 * range ^ 2) / (Math.Cos(angle) ^ 2 * (heightDiff - ((range * Math.Sin(angleR)) / Math.Cos(angleR)))))
+test = Math.Sqr((heightDiff - ((300 * Math.Sin(angleR)) / Math.Cos(angleR))) / (0.5 * -9.8)) ' CHANGE NAME OF THIS VARIABLE
+initVelo = range / (test * Math.Cos(angleR))
 xVelocity = initVelo * Math.Cos(angleR)
 yVelocity = initVelo * Math.Sin(angleR)
 time = range / xVelocity
 maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
 timeSpecific = yVelocity / 9.8
-Output.Text = CStr(initVelo)
+Output.Text = CStr(maxHeight)
 End Sub
