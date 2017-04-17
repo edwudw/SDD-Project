@@ -245,8 +245,8 @@ End Sub
 ' Dim angle As Single
 ' Dim xVelocity As Single
 ' Dim yVelocity As Single
-' Dim ySpecificVelocity As Single
-' Dim overallVelocity As Single
+'
+'
 
 ' timeSpecific = timeSpecificBox.Text ' CHECK THIS LATER
 ' initVelo = initVeloBox.Text
@@ -266,8 +266,6 @@ Dim initVelo As Single
 Dim angle As Single
 Dim xVelocity As Single
 Dim yVelocity As Single
-Dim ySpecificVelocity As Single
-Dim overallVelocity As Single
 Dim height As Single
 Dim timeSpecific2 As Single
 Dim maxHeight As Single
@@ -290,14 +288,14 @@ holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, a
 holder = excelGraph(time, yVelocity, height)
 End Sub
 
-Private Sub Algorithms3()
+Private Sub Algorithms3() ' include heightEnd and heightDiff
 Dim timeSpecific As Single
 Dim initVelo As Single
 Dim angle As Single
 Dim xVelocity As Single
 Dim yVelocity As Single
-Dim ySpecificVelocity As Single
-Dim overallVelocity As Single
+
+
 Dim height As Single
 Dim timeSpecific2 As Single
 Dim maxHeight As Single
@@ -328,8 +326,7 @@ Dim initVelo As Single
 Dim angle As Single
 Dim xVelocity As Single
 Dim yVelocity As Single
-Dim ySpecificVelocity As Single
-Dim overallVelocity As Single
+
 Dim height As Single
 Dim timeSpecific2 As Single
 Dim maxHeight As Single
@@ -363,8 +360,8 @@ Dim initVelo As Single
 Dim angle As Single
 Dim xVelocity As Single
 Dim yVelocity As Single
-Dim ySpecificVelocity As Single
-Dim overallVelocity As Single
+
+
 Dim height As Single
 Dim timeSpecific2 As Single
 Dim maxHeight As Single
@@ -396,8 +393,8 @@ Dim initVelo As Single
 Dim angle As Single
 Dim xVelocity As Single
 Dim yVelocity As Single
-Dim ySpecificVelocity As Single
-Dim overallVelocity As Single
+
+
 Dim height As Single
 Dim timeSpecific2 As Single
 Dim maxHeight As Single
@@ -407,15 +404,15 @@ Dim divisor As Single
 Dim heightEnd As Single
 Dim heightDiff As Single
 Dim angleR As Single
-Dim test As Single
+Dim temp As Single
 
 range = rangeBox.Text
 height = heightBox.Text
 angle = angleBox.Text
 heightDiff = heightEnd - height
 angleR = (angle / 180) * 3.14159265358979
-test = Math.Sqr((heightDiff - ((300 * Math.Sin(angleR)) / Math.Cos(angleR))) / (0.5 * -9.8)) ' CHANGE NAME OF THIS VARIABLE
-initVelo = range / (test * Math.Cos(angleR))
+temp = Math.Sqr((heightDiff - ((300 * Math.Sin(angleR)) / Math.Cos(angleR))) / (0.5 * -9.8))  ' CHANGE NAME OF THIS VARIABLE
+initVelo = range / (temp * Math.Cos(angleR))
 xVelocity = initVelo * Math.Cos(angleR)
 yVelocity = initVelo * Math.Sin(angleR)
 time = range / xVelocity
