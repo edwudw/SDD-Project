@@ -236,28 +236,7 @@ Else
     MsgBox ("Cannot solve projectile motion problem. Please enter more variables.")
 End If
 
-Dim xlApp As excel.Application
-Set xlApp = New excel.Application
-Dim xlWkb As excel.Workbook
-Set xlWkb = xlApp.Workbooks.Open("D:\Documents\Book1.xlsx")
-Dim xlSht As excel.Worksheet
-Set xlSht = xlWkb.Worksheets(1)
-Dim xlChart As excel.Chart
-Set xlChart = xlWkb.Charts.Add
-xlChart.ChartType = xlLine
-xlChart.SetSourceData xlSht.range("A1:B5"), xlColumns
-xlChart.Visible = xlSheetVisible
-xlChart.Legend.Clear
-xlChart.ChartArea.Font.Size = 10
-xlChart.ChartArea.Font.Color = vbRed
-Dim i As Long
-For i = 1 To xlChart.FullSeriesCollection.Count
-    xlChart.FullSeriesCollection(i).Smooth = True
-Next
 
-xlChart.ChartArea.Select
-xlChart.ChartArea.Copy
-Image1.Picture = Clipboard.GetData(vbCFBitmap)
 End Sub
 
 ' Private Sub Algorithms()
@@ -308,6 +287,7 @@ time = timeSpecific + timeSpecific2
 range = xVelocity * time
 Output.Text = CStr(range)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
+holder = excelGraph(time, yVelocity, height)
 End Sub
 
 Private Sub Algorithms3()
@@ -338,6 +318,7 @@ maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
 timeSpecific = yVelocity / 9.8
 Output.Text = CStr(maxHeight)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
+holder = excelGraph(time, yVelocity, height)
 End Sub
 
 Private Sub Algorithms4() ' FOR THIS ALGORITHM CHECK HEIGHT DIFFERENCES
@@ -372,6 +353,7 @@ maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
 timeSpecific = yVelocity / 9.8
 Output.Text = CStr(timeSpecific)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
+holder = excelGraph(time, yVelocity, height)
 End Sub
 
 Private Sub Algorithms5()
@@ -405,6 +387,7 @@ angle = Math.Atn(yVelocity / xVelocity)
 initVelo = ((xVelocity ^ 2) + (yVelocity ^ 2)) ^ 0.5
 Output.Text = CStr(xVelocity)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
+holder = excelGraph(time, yVelocity, height)
 End Sub
 
 Private Sub Algorithms6()
@@ -440,6 +423,7 @@ maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
 timeSpecific = yVelocity / 9.8
 Output.Text = CStr(maxHeight)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
+holder = excelGraph(time, yVelocity, height)
 End Sub
 
 Function OutputFunc(time As Single, range As Single, initVelo As Single, xVelocity As Single, yVelocity As Single, timeSpecific As Single, angle As Single, maxHeight As Single)
@@ -452,3 +436,48 @@ timeSpecificBox.Text = timeSpecific
 angleBox.Text = angle
 maxHeightBox.Text = maxHeight
 End Function
+
+Function excelGraph(time As Single, yVelocity As Single, height As Single)
+Dim xlApp As excel.Application
+Set xlApp = New excel.Application
+Dim xlWkb As excel.Workbook
+Set xlWkb = xlApp.Workbooks.Open("D:\Documents\Book1.xlsx")
+Dim xlSht As excel.Worksheet
+Set xlSht = xlWkb.Worksheets(1)
+
+
+Dim timeInterval As Single
+Dim i As Integer
+Dim times(9) As Single
+Dim heights(9) As Single
+timeInterval = time / 10
+For i = 0 To 9
+    times(i) = timeInterval * (i + 1)
+    heights(i) = (yVelocity * times(i)) + (0.5 * -9.8 * times(i) ^ 2)
+Next
+xlSht.Cells(1, 1).Value = "Time"
+xlSht.Cells(1, 2).Value = "Height"
+xlSht.Cells(2, 1).Value = 0
+xlSht.Cells(2, 2).Value = height
+Output.Text = times(0)
+For i = 3 To 12
+    xlSht.Cells(i, 1).Value = times(i - 3)
+    xlSht.Cells(i, 2).Value = heights(i - 3) + height
+Next
+Dim xlChart As excel.Chart
+Set xlChart = xlWkb.Charts.Add
+xlChart.ChartType = xlLine
+xlChart.SetSourceData xlSht.range("A1:B12"), xlColumns
+xlChart.Visible = xlSheetVisible
+xlChart.Legend.Clear
+xlChart.ChartArea.Font.Size = 10
+xlChart.ChartArea.Font.Color = vbRed
+For i = 1 To xlChart.FullSeriesCollection.Count
+    xlChart.FullSeriesCollection(i).Smooth = True
+Next
+
+xlChart.ChartArea.Select
+xlChart.ChartArea.Copy
+Image1.Picture = Clipboard.GetData(vbCFBitmap)
+End Function
+
