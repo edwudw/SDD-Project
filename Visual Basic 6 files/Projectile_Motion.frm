@@ -202,20 +202,23 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Private Sub Command1_Click()
-Dim initVelo As Single
-Dim angle As Single
-Dim range As Single
-Dim time As Single
-Dim maxHeight As Single
+Dim initVelo As Single ' Initial velocity of the projectile
+Dim angle As Single ' Angle between projectile's launch and horizontal
+Dim range As Single ' Horizontal distance projectile travels
+Dim time As Single ' Time of projectile's journey
+Dim maxHeight As Single ' Maximum height that projectile reaches
+
+' Assigns information that user enters to variables
 initVelo = initVeloBox.Text
 angle = angleBox.Text
 range = rangeBox.Text
 time = timeBox.Text
 maxHeight = maxHeightBox.Text
 
-If range <> 0 Then
+' Finds which information user has entered, if equals 0 then user has not entered information regarding that variable
+If range <> 0 Then ' All projectile motion questions either give range or intial velocity
     If time <> 0 Then
-        Call Algorithms4
+        Call Algorithms4 ' Decides which algorithm should be used based on data given by user
     ElseIf angle <> 0 Then
         Call Algorithms6
     ElseIf maxHeight <> 0 Then
@@ -261,31 +264,32 @@ End Sub
 ' End Sub
 
 Private Sub Algorithms2()
-Dim timeSpecific As Single
+Dim timeSpecific As Single ' time taken to reach maximum height
 Dim initVelo As Single
 Dim angle As Single
-Dim xVelocity As Single
-Dim yVelocity As Single
+Dim xVelocity As Single ' horizontal component of INITIAL velocity of projectile
+Dim yVelocity As Single ' vertical component of INITIAL velocity of projectile
 Dim height As Single
-Dim timeSpecific2 As Single
+Dim timeSpecific2 As Single ' time taken between reaching maximum height and landing of projectile
 Dim maxHeight As Single
 Dim time As Single
 Dim range As Single
-Dim holder
+Dim holder ' Due to Visual Baic 6 limitations, an empty variable is required to call functions
 
-height = heightBox.Text
+height = heightBox.Text ' Getting variables from user
 initVelo = initVeloBox.Text
 angle = angleBox.Text
-xVelocity = initVelo * Math.Cos((angle / 180) * 3.14159265358979)
-yVelocity = initVelo * Math.Sin((angle / 180) * 3.14159265358979)
-maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
-timeSpecific = yVelocity / 9.8
-timeSpecific2 = (maxHeight / (0.5 * 9.8)) ^ (1 / 2)
-time = timeSpecific + timeSpecific2
-range = xVelocity * time
-Output.Text = CStr(range)
-holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
-holder = excelGraph(time, yVelocity, height)
+
+xVelocity = initVelo * Math.Cos((angle / 180) * 3.14159265358979) ' The Math.Cos and Math.Sin functions require the angle to be in radians
+yVelocity = initVelo * Math.Sin((angle / 180) * 3.14159265358979) ' Uses Sin and Cos to find horizontal and vertical components of initial velocity
+maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height ' rearranges v^2 = u^2 + 2as to find maxHeight (v is 0 at maxHeight)
+timeSpecific = yVelocity / 9.8 ' as v is 0 at maxHeight, v = u + at becomes t = u / a
+timeSpecific2 = (maxHeight / (0.5 * 9.8)) ^ (1 / 2) ' If only journey after maxHeight is considered, u in s = ut + 0.5at^2 is 0
+time = timeSpecific + timeSpecific2 ' time before maxHeight is reached and time after, when added, becomes total time of journey
+range = xVelocity * time ' One of equations of projectile motion
+Output.Text = CStr(range) ' TEST CODE, REMOVE BEFORE SUBMISSION
+holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight) ' outputs all variables to user
+holder = excelGraph(time, yVelocity, height) ' Outputs some variables to Graph function to display graph
 End Sub
 
 Private Sub Algorithms3() ' include heightEnd and heightDiff
@@ -294,23 +298,21 @@ Dim initVelo As Single
 Dim angle As Single
 Dim xVelocity As Single
 Dim yVelocity As Single
-
-
 Dim height As Single
 Dim timeSpecific2 As Single
 Dim maxHeight As Single
 Dim time As Single
 Dim range As Single
-Dim divisor As Single
+Dim divisor As Single ' temporary variable required to calculate inverse sin
 
 height = heightBox.Text
 initVelo = initVeloBox.Text
 time = timeBox.Text
 
-yVelocity = (((-1) * height) - (0.5 * -9.8 * time ^ 2)) / time
-divisor = yVelocity / initVelo
-angle = Math.Atn(divisor / (-divisor * divisor + 1) ^ 0.5)
-xVelocity = initVelo * Math.Cos(angle)
+yVelocity = (((-1) * height) - (0.5 * -9.8 * time ^ 2)) / time ' Rearrange s = ut + 0.5at^2
+divisor = yVelocity / initVelo ' inverse sin of yVelocity / initVelo will find angle
+angle = Math.Atn(divisor / (-divisor * divisor + 1) ^ 0.5) ' VB6 does not support inverse sin, so inverse tan required to calculate inverse sin
+xVelocity = initVelo * Math.Cos(angle) ' As in previous algorithm
 range = xVelocity * time
 maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
 timeSpecific = yVelocity / 9.8
