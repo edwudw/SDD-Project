@@ -11,7 +11,7 @@ Begin VB.Form Form1
    Begin VB.TextBox maxHeightBox 
       Height          =   375
       Left            =   18840
-      TabIndex        =   22
+      TabIndex        =   21
       Text            =   "0"
       Top             =   8160
       Width           =   975
@@ -19,7 +19,7 @@ Begin VB.Form Form1
    Begin VB.TextBox heightEndBox 
       Height          =   615
       Left            =   18840
-      TabIndex        =   20
+      TabIndex        =   19
       Text            =   "0"
       Top             =   7440
       Width           =   975
@@ -27,18 +27,10 @@ Begin VB.Form Form1
    Begin VB.TextBox heightBox 
       Height          =   495
       Left            =   18840
-      TabIndex        =   18
+      TabIndex        =   17
       Text            =   "0"
       Top             =   6840
       Width           =   975
-   End
-   Begin VB.TextBox Output 
-      Height          =   855
-      Left            =   15120
-      TabIndex        =   16
-      Text            =   "Text1"
-      Top             =   9720
-      Width           =   2055
    End
    Begin VB.TextBox angleBox 
       Height          =   495
@@ -118,7 +110,7 @@ Begin VB.Form Form1
       Caption         =   "Maximum Height"
       Height          =   615
       Left            =   17160
-      TabIndex        =   21
+      TabIndex        =   20
       Top             =   8160
       Width           =   1695
    End
@@ -126,7 +118,7 @@ Begin VB.Form Form1
       Caption         =   "Height at projectile landing"
       Height          =   495
       Left            =   17160
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   7560
       Width           =   1695
    End
@@ -134,7 +126,7 @@ Begin VB.Form Form1
       Caption         =   "Height at projectile launch"
       Height          =   615
       Left            =   17160
-      TabIndex        =   17
+      TabIndex        =   16
       Top             =   6960
       Width           =   1575
    End
@@ -215,7 +207,7 @@ range = rangeBox.Text
 time = timeBox.Text
 maxHeight = maxHeightBox.Text
 
-' Finds which information user has entered, if equals 0 then user has not entered information regarding that variable
+' Finds which information user has entered, if equa ls 0 then user has not entered information regarding that variable
 If range <> 0 Then ' All projectile motion questions either give range or intial velocity
     If time <> 0 Then
         Call Algorithms4 ' Decides which algorithm should be used based on data given by user
@@ -260,7 +252,6 @@ End Sub
 
 ' ySpecificVelocity = yVelocity + (-9.8 * timeSpecific)
 ' overallVelocity = ((ySpecificVelocity) ^ 2 + (xVelocity) ^ 2) ^ (1 / 2)
-' Output.Text = CStr(overallVelocity)
 ' End Sub
 
 Private Sub Algorithms2()
@@ -287,7 +278,6 @@ timeSpecific = yVelocity / 9.8 ' as v is 0 at maxHeight, v = u + at becomes t = 
 timeSpecific2 = (maxHeight / (0.5 * 9.8)) ^ (1 / 2) ' If only journey after maxHeight is considered, u in s = ut + 0.5at^2 is 0
 time = timeSpecific + timeSpecific2 ' time before maxHeight is reached and time after, when added, becomes total time of journey
 range = xVelocity * time ' One of equations of projectile motion
-Output.Text = CStr(range) ' TEST CODE, REMOVE BEFORE SUBMISSION
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight) ' outputs all variables to user
 holder = excelGraph(time, yVelocity, height) ' Outputs some variables to Graph function to display graph
 End Sub
@@ -316,7 +306,6 @@ xVelocity = initVelo * Math.Cos(angle) ' As in previous algorithm
 range = xVelocity * time
 maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
 timeSpecific = yVelocity / 9.8
-Output.Text = CStr(maxHeight)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
 holder = excelGraph(time, yVelocity, height)
 End Sub
@@ -350,7 +339,6 @@ angle = Math.Atn(yVelocity / xVelocity)
 initVelo = ((xVelocity ^ 2) + (yVelocity ^ 2)) ^ 0.5
 maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
 timeSpecific = yVelocity / 9.8
-Output.Text = CStr(timeSpecific)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
 holder = excelGraph(time, yVelocity, height)
 End Sub
@@ -384,7 +372,6 @@ time = timeSpecific + timeSpecific2
 xVelocity = range / time
 angle = Math.Atn(yVelocity / xVelocity)
 initVelo = ((xVelocity ^ 2) + (yVelocity ^ 2)) ^ 0.5
-Output.Text = CStr(xVelocity)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
 holder = excelGraph(time, yVelocity, height)
 End Sub
@@ -420,7 +407,6 @@ yVelocity = initVelo * Math.Sin(angleR)
 time = range / xVelocity
 maxHeight = (yVelocity ^ 2 / (2 * 9.8)) + height
 timeSpecific = yVelocity / 9.8
-Output.Text = CStr(maxHeight)
 holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
 holder = excelGraph(time, yVelocity, height)
 End Sub
@@ -458,7 +444,6 @@ xlSht.Cells(1, 1).Value = "Time"
 xlSht.Cells(1, 2).Value = "Height"
 xlSht.Cells(2, 1).Value = 0
 xlSht.Cells(2, 2).Value = height
-Output.Text = times(0)
 For i = 3 To 12
     xlSht.Cells(i, 1).Value = times(i - 3)
     xlSht.Cells(i, 2).Value = heights(i - 3) + height
