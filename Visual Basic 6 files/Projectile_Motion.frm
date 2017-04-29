@@ -1,21 +1,163 @@
 VERSION 5.00
 Begin VB.Form Form1 
+   BackColor       =   &H00000000&
    ClientHeight    =   10215
    ClientLeft      =   225
    ClientTop       =   570
-   ClientWidth     =   12855
+   ClientWidth     =   12870
    LinkTopic       =   "Form1"
    ScaleHeight     =   12915
    ScaleWidth      =   23760
    StartUpPosition =   3  'Windows Default
-   Begin VB.Frame Frame1 
-      BackColor       =   &H00C0C000&
-      Caption         =   "Frame1"
-      Height          =   11055
-      Left            =   120
+   WindowState     =   2  'Maximized
+   Begin VB.Frame mainFrame 
+      BackColor       =   &H0000FF00&
+      BorderStyle     =   0  'None
+      Height          =   11295
+      Left            =   480
       TabIndex        =   0
-      Top             =   0
-      Width           =   20295
+      Top             =   480
+      Width           =   23055
+      Begin VB.Frame dialogFrame 
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         Caption         =   "Frame1"
+         Height          =   5895
+         Left            =   8400
+         TabIndex        =   25
+         Top             =   2160
+         Width           =   7695
+         Begin VB.TextBox Dialog3Box 
+            Enabled         =   0   'False
+            ForeColor       =   &H00000000&
+            Height          =   495
+            Left            =   3120
+            TabIndex        =   33
+            Top             =   4080
+            Width           =   2175
+         End
+         Begin VB.OptionButton Option3 
+            BackColor       =   &H00000000&
+            Caption         =   "Option3"
+            Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   12
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   735
+            Left            =   600
+            TabIndex        =   32
+            Top             =   3960
+            Width           =   2295
+         End
+         Begin VB.CommandButton dialogButton 
+            Caption         =   "OK"
+            Height          =   375
+            Left            =   4320
+            TabIndex        =   31
+            Top             =   5160
+            Width           =   975
+         End
+         Begin VB.TextBox Dialog2Box 
+            Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   12
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   495
+            Left            =   3120
+            TabIndex        =   29
+            Top             =   3120
+            Width           =   2175
+         End
+         Begin VB.TextBox Dialog1Box 
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   12
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   405
+            Left            =   3120
+            TabIndex        =   28
+            Top             =   2040
+            Width           =   2175
+         End
+         Begin VB.OptionButton Option2 
+            BackColor       =   &H00000000&
+            Caption         =   "Range (metres)"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   12
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   735
+            Left            =   600
+            TabIndex        =   27
+            Top             =   2880
+            Width           =   2295
+         End
+         Begin VB.OptionButton Option1 
+            BackColor       =   &H00000000&
+            Caption         =   "Time (seconds)"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   12
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   975
+            Left            =   600
+            TabIndex        =   26
+            Top             =   1680
+            Value           =   -1  'True
+            Width           =   2295
+         End
+         Begin VB.Label dialogLabel 
+            BackColor       =   &H00000000&
+            Caption         =   "Select either time or range and enter in the box the corresponding variable."
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   12
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   975
+            Left            =   600
+            TabIndex        =   30
+            Top             =   600
+            Width           =   4215
+         End
+      End
       Begin VB.PictureBox Image1 
          AutoSize        =   -1  'True
          Height          =   4695
@@ -70,20 +212,29 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox timeSpecificBox 
-         Height          =   375
+         Height          =   495
          Left            =   18240
          TabIndex        =   6
-         Top             =   3600
+         Top             =   3480
          Width           =   975
       End
       Begin VB.TextBox angleBox 
-         Height          =   495
+         Height          =   615
          Left            =   18240
          TabIndex        =   5
          Top             =   4080
          Width           =   975
       End
       Begin VB.TextBox heightBox 
+         BeginProperty DataFormat 
+            Type            =   0
+            Format          =   "0"
+            HaveTrueFalseNull=   0
+            FirstDayOfWeek  =   0
+            FirstWeekOfYear =   0
+            LCID            =   3081
+            SubFormatType   =   0
+         EndProperty
          Height          =   495
          Left            =   18240
          TabIndex        =   4
@@ -92,18 +243,18 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox heightEndBox 
-         Height          =   615
+         Height          =   495
          Left            =   18240
          TabIndex        =   3
          Text            =   "0"
-         Top             =   6240
+         Top             =   5400
          Width           =   975
       End
       Begin VB.TextBox maxHeightBox 
          Height          =   375
          Left            =   18240
          TabIndex        =   2
-         Top             =   6960
+         Top             =   6000
          Width           =   975
       End
       Begin VB.TextBox accelBox 
@@ -111,57 +262,122 @@ Begin VB.Form Form1
          Left            =   18240
          TabIndex        =   1
          Text            =   "9.8"
-         Top             =   7440
+         Top             =   6480
          Width           =   975
       End
       Begin VB.Label timeLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Time"
-         Height          =   255
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   495
          Left            =   16560
          TabIndex        =   24
          Top             =   360
-         Width           =   615
+         Width           =   1455
       End
       Begin VB.Label rangeLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Range"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
          Height          =   375
          Left            =   16560
          TabIndex        =   23
          Top             =   960
-         Width           =   735
+         Width           =   1575
       End
       Begin VB.Label velocityLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Initial Velocity"
-         Height          =   495
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   615
          Left            =   16560
          TabIndex        =   22
-         Top             =   1560
-         Width           =   1215
+         Top             =   1440
+         Width           =   1575
       End
       Begin VB.Label xVelocityLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "X Component of Initial Velocity (Ux)"
-         Height          =   495
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   615
          Left            =   16560
          TabIndex        =   21
-         Top             =   2280
-         Width           =   1335
+         Top             =   2160
+         Width           =   1575
       End
       Begin VB.Label yVelocityLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Y Component of Initial Velocity (Uy)"
-         Height          =   495
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   615
          Left            =   16560
          TabIndex        =   20
          Top             =   2880
          Width           =   1575
       End
       Begin VB.Label timeSpecificLabel 
-         BackColor       =   &H00C0C000&
+         BackColor       =   &H0000FF00&
          Caption         =   "Time at Max height"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
          Height          =   375
          Left            =   16560
          TabIndex        =   19
@@ -169,8 +385,19 @@ Begin VB.Form Form1
          Width           =   1695
       End
       Begin VB.Label angleLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Angle above Horizontal which Projectile was fired (in degrees)"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
          Height          =   855
          Left            =   16560
          TabIndex        =   18
@@ -178,8 +405,19 @@ Begin VB.Form Form1
          Width           =   1575
       End
       Begin VB.Label heightLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Height at projectile launch"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
          Height          =   615
          Left            =   16560
          TabIndex        =   17
@@ -187,30 +425,63 @@ Begin VB.Form Form1
          Width           =   1575
       End
       Begin VB.Label heightEndLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Height at projectile landing"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
          Height          =   495
          Left            =   16560
          TabIndex        =   16
-         Top             =   6360
+         Top             =   5400
          Width           =   1695
       End
       Begin VB.Label maxHeightLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Maximum Height"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
          Height          =   495
          Left            =   16560
          TabIndex        =   15
-         Top             =   6960
+         Top             =   6000
          Width           =   1695
       End
       Begin VB.Label accelLabel 
-         BackColor       =   &H00C0C000&
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
          Caption         =   "Acceleration"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
          Height          =   375
          Left            =   16560
          TabIndex        =   14
-         Top             =   7440
+         Top             =   6480
          Width           =   1575
       End
    End
@@ -498,3 +769,30 @@ xlChart.ChartArea.Copy ' Copies excel chart
 Image1.Picture = Clipboard.GetData(vbCFBitmap) ' Reads clipboard and displays picture in clipboard which is the excel chart
 End Function
 
+Private Sub dialogButton_Click()
+If IsNumeric(Dialog1Box.Text) = False Or IsNumeric(Dialog2Box.Text) = False Or IsNumeric(Dialog3Box.Text) Then
+    MsgBox ("Please enter a positive variable")
+ElseIf Dialog1Box.Text < 0 Or Dialog2Box.Text < 0 Or Dialog3Box.Text < 0 Then
+    MsgBox ("Please enter a positive number")
+ElseIf dialogLabel.Text = "Select either initial velocity or range and enter in the box the corresponding variable." Then
+    If Option1.Value = True Then
+        initVeloBox.Text = Dialog1Box.Text
+        dialogLabel.Text = "Select either time, angle or maxHeight and enter in the box the corresponding variable. "
+        Option3.Enabled = True
+        Dialog3Box.Enabled = True
+        
+    Else
+        rangeBox.Text = Dialog2Box.Text
+    End If
+    
+End Sub
+
+Private Sub Option1_Click()
+Dialog1Box.Enabled = True
+Dialog2Box.Enabled = False
+End Sub
+
+Private Sub Option2_Click()
+Dialog1Box.Enabled = False
+Dialog2Box.Enabled = True
+End Sub
