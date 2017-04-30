@@ -6,36 +6,81 @@ Begin VB.Form Form1
    ClientTop       =   570
    ClientWidth     =   12870
    LinkTopic       =   "Form1"
-   ScaleHeight     =   12915
-   ScaleWidth      =   23760
+   ScaleHeight     =   10215
+   ScaleWidth      =   12870
    StartUpPosition =   3  'Windows Default
    WindowState     =   2  'Maximized
-   Begin VB.Frame mainFrame 
-      BackColor       =   &H0000FF00&
+   Begin VB.Frame dialogFrame 
+      BackColor       =   &H00000000&
       BorderStyle     =   0  'None
-      Height          =   11295
-      Left            =   480
-      TabIndex        =   0
-      Top             =   480
-      Width           =   23055
-      Begin VB.Frame dialogFrame 
+      Caption         =   "Frame1"
+      Height          =   5895
+      Left            =   8880
+      TabIndex        =   24
+      Top             =   3120
+      Width           =   7695
+      Begin VB.TextBox Dialog1Box 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   405
+         Left            =   3120
+         TabIndex        =   36
+         Top             =   2040
+         Width           =   2175
+      End
+      Begin VB.TextBox Dialog2Box 
+         Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   495
+         Left            =   3120
+         TabIndex        =   35
+         Top             =   3120
+         Width           =   2175
+      End
+      Begin VB.CommandButton dialogButton 
+         Caption         =   "OK"
+         Height          =   375
+         Left            =   4320
+         TabIndex        =   34
+         Top             =   5160
+         Width           =   975
+      End
+      Begin VB.TextBox Dialog3Box 
+         Enabled         =   0   'False
+         ForeColor       =   &H00000000&
+         Height          =   495
+         Left            =   3120
+         TabIndex        =   33
+         Top             =   4080
+         Visible         =   0   'False
+         Width           =   2175
+      End
+      Begin VB.Frame optionFrame 
          BackColor       =   &H00000000&
          BorderStyle     =   0  'None
          Caption         =   "Frame1"
-         Height          =   5895
-         Left            =   8400
-         TabIndex        =   25
-         Top             =   2160
-         Width           =   7695
-         Begin VB.TextBox Dialog3Box 
-            Enabled         =   0   'False
-            ForeColor       =   &H00000000&
-            Height          =   495
-            Left            =   3120
-            TabIndex        =   33
-            Top             =   4080
-            Width           =   2175
-         End
+         Height          =   3375
+         Left            =   240
+         TabIndex        =   29
+         Top             =   1800
+         Width           =   2655
          Begin VB.OptionButton Option3 
             BackColor       =   &H00000000&
             Caption         =   "Option3"
@@ -51,53 +96,11 @@ Begin VB.Form Form1
             EndProperty
             ForeColor       =   &H00FFFFFF&
             Height          =   735
-            Left            =   600
+            Left            =   240
             TabIndex        =   32
-            Top             =   3960
+            Top             =   2280
+            Visible         =   0   'False
             Width           =   2295
-         End
-         Begin VB.CommandButton dialogButton 
-            Caption         =   "OK"
-            Height          =   375
-            Left            =   4320
-            TabIndex        =   31
-            Top             =   5160
-            Width           =   975
-         End
-         Begin VB.TextBox Dialog2Box 
-            Enabled         =   0   'False
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   12
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   495
-            Left            =   3120
-            TabIndex        =   29
-            Top             =   3120
-            Width           =   2175
-         End
-         Begin VB.TextBox Dialog1Box 
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   12
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   405
-            Left            =   3120
-            TabIndex        =   28
-            Top             =   2040
-            Width           =   2175
          End
          Begin VB.OptionButton Option2 
             BackColor       =   &H00000000&
@@ -113,14 +116,14 @@ Begin VB.Form Form1
             EndProperty
             ForeColor       =   &H00FFFFFF&
             Height          =   735
-            Left            =   600
-            TabIndex        =   27
-            Top             =   2880
+            Left            =   240
+            TabIndex        =   31
+            Top             =   1200
             Width           =   2295
          End
          Begin VB.OptionButton Option1 
             BackColor       =   &H00000000&
-            Caption         =   "Time (seconds)"
+            Caption         =   "Initial velocity (m/s)"
             BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   12
@@ -132,15 +135,27 @@ Begin VB.Form Form1
             EndProperty
             ForeColor       =   &H00FFFFFF&
             Height          =   975
-            Left            =   600
-            TabIndex        =   26
-            Top             =   1680
+            Left            =   240
+            TabIndex        =   30
+            Top             =   120
             Value           =   -1  'True
             Width           =   2295
          End
-         Begin VB.Label dialogLabel 
+      End
+      Begin VB.Frame labelFrame 
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         Caption         =   "Frame1"
+         Height          =   3495
+         Left            =   360
+         TabIndex        =   25
+         Top             =   1800
+         Visible         =   0   'False
+         Width           =   2535
+         Begin VB.Label heightSDialogLabel 
+            Alignment       =   2  'Center
             BackColor       =   &H00000000&
-            Caption         =   "Select either time or range and enter in the box the corresponding variable."
+            Caption         =   "Height at projectile launch (metres)"
             BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   12
@@ -151,30 +166,91 @@ Begin VB.Form Form1
                Strikethrough   =   0   'False
             EndProperty
             ForeColor       =   &H00FFFFFF&
-            Height          =   975
-            Left            =   600
-            TabIndex        =   30
-            Top             =   600
-            Width           =   4215
+            Height          =   855
+            Left            =   0
+            TabIndex        =   28
+            Top             =   120
+            Width           =   2415
+         End
+         Begin VB.Label heightEDialogLabel 
+            Alignment       =   2  'Center
+            BackColor       =   &H00000000&
+            Caption         =   "Height at projectile landing (metres)"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   12
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   855
+            Left            =   0
+            TabIndex        =   27
+            Top             =   1200
+            Width           =   2535
+         End
+         Begin VB.Label accelDialogLabel 
+            Alignment       =   2  'Center
+            BackColor       =   &H00000000&
+            Caption         =   "Gravitational acceleration (ms^-2)"
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   12
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   1095
+            Left            =   120
+            TabIndex        =   26
+            Top             =   2040
+            Width           =   2415
          End
       End
+      Begin VB.Label dialogLabel 
+         BackColor       =   &H00000000&
+         Caption         =   "Select either initial velocity or range and enter in the box the corresponding variable."
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   975
+         Left            =   600
+         TabIndex        =   37
+         Top             =   600
+         Width           =   4215
+      End
+   End
+   Begin VB.Frame mainFrame 
+      BackColor       =   &H0000FF00&
+      BorderStyle     =   0  'None
+      Height          =   11295
+      Left            =   120
+      TabIndex        =   0
+      Top             =   120
+      Visible         =   0   'False
+      Width           =   23055
       Begin VB.PictureBox Image1 
          AutoSize        =   -1  'True
          Height          =   4695
          Left            =   120
          ScaleHeight     =   4635
          ScaleWidth      =   11715
-         TabIndex        =   13
+         TabIndex        =   12
          Top             =   240
          Width           =   11775
-      End
-      Begin VB.CommandButton Command1 
-         Caption         =   "Start"
-         Height          =   735
-         Left            =   17160
-         TabIndex        =   12
-         Top             =   9720
-         Width           =   1815
       End
       Begin VB.TextBox timeBox 
          Height          =   495
@@ -281,7 +357,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   495
          Left            =   16560
-         TabIndex        =   24
+         TabIndex        =   23
          Top             =   360
          Width           =   1455
       End
@@ -301,7 +377,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   375
          Left            =   16560
-         TabIndex        =   23
+         TabIndex        =   22
          Top             =   960
          Width           =   1575
       End
@@ -321,7 +397,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   615
          Left            =   16560
-         TabIndex        =   22
+         TabIndex        =   21
          Top             =   1440
          Width           =   1575
       End
@@ -341,7 +417,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   615
          Left            =   16560
-         TabIndex        =   21
+         TabIndex        =   20
          Top             =   2160
          Width           =   1575
       End
@@ -361,7 +437,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   615
          Left            =   16560
-         TabIndex        =   20
+         TabIndex        =   19
          Top             =   2880
          Width           =   1575
       End
@@ -380,7 +456,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   375
          Left            =   16560
-         TabIndex        =   19
+         TabIndex        =   18
          Top             =   3600
          Width           =   1695
       End
@@ -400,7 +476,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   855
          Left            =   16560
-         TabIndex        =   18
+         TabIndex        =   17
          Top             =   3960
          Width           =   1575
       End
@@ -420,7 +496,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   615
          Left            =   16560
-         TabIndex        =   17
+         TabIndex        =   16
          Top             =   4800
          Width           =   1575
       End
@@ -440,7 +516,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   495
          Left            =   16560
-         TabIndex        =   16
+         TabIndex        =   15
          Top             =   5400
          Width           =   1695
       End
@@ -460,7 +536,7 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   495
          Left            =   16560
-         TabIndex        =   15
+         TabIndex        =   14
          Top             =   6000
          Width           =   1695
       End
@@ -480,10 +556,29 @@ Begin VB.Form Form1
          ForeColor       =   &H00000000&
          Height          =   375
          Left            =   16560
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   6480
          Width           =   1575
       End
+   End
+   Begin VB.Label loadingLabel 
+      BackColor       =   &H00000000&
+      Caption         =   "Please Wait - Loading..."
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   17.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   735
+      Left            =   9120
+      TabIndex        =   38
+      Top             =   3480
+      Width           =   6615
    End
 End
 Attribute VB_Name = "Form1"
@@ -492,7 +587,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
-Private Sub Command1_Click()
+Private Sub mainFunc()
 Dim initVelo As String ' Initial velocity of the projectile
 Dim angle As String ' Angle between projectile's launch and horizontal
 Dim range As String ' Horizontal distance projectile travels
@@ -770,29 +865,128 @@ Image1.Picture = Clipboard.GetData(vbCFBitmap) ' Reads clipboard and displays pi
 End Function
 
 Private Sub dialogButton_Click()
-If IsNumeric(Dialog1Box.Text) = False Or IsNumeric(Dialog2Box.Text) = False Or IsNumeric(Dialog3Box.Text) Then
-    MsgBox ("Please enter a positive variable")
-ElseIf Dialog1Box.Text < 0 Or Dialog2Box.Text < 0 Or Dialog3Box.Text < 0 Then
-    MsgBox ("Please enter a positive number")
-ElseIf dialogLabel.Text = "Select either initial velocity or range and enter in the box the corresponding variable." Then
+If dialogLabel.Caption = "Select either initial velocity or range and enter in the box the corresponding variable." Then
     If Option1.Value = True Then
-        initVeloBox.Text = Dialog1Box.Text
-        dialogLabel.Text = "Select either time, angle or maxHeight and enter in the box the corresponding variable. "
-        Option3.Enabled = True
-        Dialog3Box.Enabled = True
-        
+        If IsNumeric(Dialog1Box.Text) = False Then
+            MsgBox ("Please enter a positive number.")
+        Else
+            initVeloBox.Text = Dialog1Box.Text
+            dialogLabel.Caption = "Select either time or angle and enter in the box the corresponding variable."
+            Option1.Caption = "Angle (degrees)"
+            Option2.Caption = "Time (seconds)"
+            Dialog1Box.Text = ""
+        End If
+    ElseIf Option2.Value = True Then
+        If IsNumeric(Dialog2Box.Text) = False Then
+            MsgBox ("Please enter a positive number.")
+        Else
+            rangeBox.Text = Dialog2Box.Text
+            dialogLabel.Caption = "Select either time, angle or maximum height and enter in the box the corresponding variable."
+            Option3.Enabled = True
+            Option3.Visible = True
+            Dialog3Box.Visible = True
+            Option1.Caption = "Angle (degrees)"
+            Option2.Caption = "Time (seconds)"
+            Option3.Caption = "Maximum Height (metres)"
+            Dialog2Box.Text = ""
+        End If
     Else
-        rangeBox.Text = Dialog2Box.Text
+        MsgBox ("Error - No option was selected.")
     End If
+ElseIf dialogLabel.Caption = "Select either time or angle and enter in the box the corresponding variable." Then
+    If Option1.Value = True Then
+        If IsNumeric(Dialog1Box.Text) = False Then
+            MsgBox ("Please enter a positive number.")
+        Else
+            angleBox.Text = Dialog1Box.Text
+            Dialog1Box.Text = ""
+        End If
+    ElseIf Option2.Value = True Then
+        If IsNumeric(Dialog2Box.Text) = False Then
+            MsgBox ("Please enter a positive number")
+        Else
+            timeBox.Text = Dialog2Box.Text
+            Dialog2Box.Text = ""
+        End If
+    Else
+        MsgBox ("Error - No option was selected")
+    End If
+    optionFrame.Visible = False
+    labelFrame.Visible = True
+    Dialog1Box.Enabled = True
+    Dialog2Box.Enabled = True
+    Dialog3Box.Enabled = True
+    Option3.Visible = True
+    Dialog3Box.Visible = True
+    dialogLabel.Caption = "Enter in the box the heights at projectile launch and landing and the gravitational acceleration."
+    Dialog1Box.Text = "0"
+    Dialog2Box.Text = "0"
+    Dialog3Box.Text = "9.8"
+ElseIf dialogLabel.Caption = "Select either time, angle or maximum height and enter in the box the corresponding variable." Then
+    If Option1.Value = True Then
+        If IsNumeric(Dialog1Box.Text) = False Then
+            MsgBox ("Please enter a positive number")
+        Else
+            angleBox.Text = Dialog1Box.Text
+            Dialog1Box.Text = ""
+        End If
+    ElseIf Option2.Value = True Then
+        If IsNumeric(Dialog2Box.Text) = False Then
+            MsgBox ("Please enter a positive number")
+        Else
+            timeBox.Text = Dialog2Box.Text
+            Dialog2Box.Text = ""
+        End If
+    ElseIf Option3.Value = True Then
+        If IsNumeric(Dialog3Box.Text) = False Then
+            MsgBox ("Please enter a positive number")
+        Else
+            maxHeightBox.Text = Dialog3Box.Text
+            Dialog3Box.Text = ""
+        End If
+    Else
+        MsgBox ("Error - No option was selected.")
+    End If
+    optionFrame.Visible = False
+    labelFrame.Visible = True
+    Dialog1Box.Enabled = True
+    Dialog2Box.Enabled = True
+    Dialog3Box.Enabled = True
+    dialogLabel.Caption = "Enter in the box the heights at projectile launch and landing and the gravitational acceleration."
+    Dialog1Box.Text = "0"
+    Dialog2Box.Text = "0"
+    Dialog3Box.Text = "9.8"
+ElseIf dialogLabel.Caption = "Enter in the box the heights at projectile launch and landing and the gravitational acceleration." Then
+    If IsNumeric(Dialog1Box.Text) = False Or IsNumeric(Dialog2Box.Text) = False Or IsNumeric(Dialog3Box.Text) = False Then
+        MsgBox ("Please enter a positive number")
+    Else
+        heightBox.Text = Dialog1Box.Text
+        heightEndBox.Text = Dialog2Box.Text
+        accelBox.Text = Dialog3Box.Text
+        dialogFrame.Visible = False
+        Call mainFunc
+        mainFrame.Visible = True
+    End If
+Else
+    MsgBox ("Error - dialogLabel has been edited.")
+End If
     
 End Sub
 
 Private Sub Option1_Click()
 Dialog1Box.Enabled = True
 Dialog2Box.Enabled = False
+Dialog3Box.Enabled = False
 End Sub
 
 Private Sub Option2_Click()
 Dialog1Box.Enabled = False
 Dialog2Box.Enabled = True
+Dialog3Box.Enabled = False
+End Sub
+
+Private Sub Option3_Click()
+Dialog1Box.Enabled = False
+Dialog2Box.Enabled = False
+Dialog3Box.Enabled = True
 End Sub
