@@ -682,6 +682,7 @@ Dim time As Single
 Dim range As Single
 Dim divisor As Single ' temporary variable required to calculate inverse sin
 Dim accel As Single
+Dim tempAngle As Single ' required to ensure negative number is not square rooted
 height = heightBox.Text
 initVelo = initVeloBox.Text
 time = timeBox.Text
@@ -689,14 +690,21 @@ accel = accelBox.Text
 
 yVelocity = (((-1) * height) - (0.5 * -accel * time ^ 2)) / time ' Rearrange s = ut + 0.5at^2
 divisor = yVelocity / initVelo ' inverse sin of yVelocity / initVelo will find angle
-angleR = Math.Atn(divisor / (-divisor * divisor + 1) ^ 0.5) ' VB6 does not support inverse sin, so inverse tan required to calculate inverse sin
-angle = (angleR * 180) / 3.1415926
-xVelocity = initVelo * Math.Cos(angleR) ' As in previous algorithm
-range = xVelocity * time
-maxHeight = (yVelocity ^ 2 / (2 * accel)) + height
-timeSpecific = yVelocity / accel
-holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
-holder = excelGraph(time, yVelocity, height)
+tempAngle = -divisor * divisor + 1
+If tempAngle < 0 Then
+    MsgBox ("Please use other variables. These variables will return an error as a negative number cannot be square rooted. The program will now close.")
+    Unload Me
+    ' Insert reset function here
+Else
+    angleR = Math.Atn(divisor / (-divisor * divisor + 1) ^ 0.5) ' VB6 does not support inverse sin, so inverse tan required to calculate inverse sin
+    angle = (angleR * 180) / 3.1415926
+    xVelocity = initVelo * Math.Cos(angleR) ' As in previous algorithm
+    range = xVelocity * time
+    maxHeight = (yVelocity ^ 2 / (2 * accel)) + height
+    timeSpecific = yVelocity / accel
+    holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
+    holder = excelGraph(time, yVelocity, height)
+End If
 End Sub
 
 Private Sub Algorithm3()
@@ -789,7 +797,7 @@ Dim divisor As Single
 Dim heightEnd As Single
 Dim heightDiff As Single
 Dim angleR As Single
-Dim temp As Single
+Dim timeTemp As Single ' required to ensure that Math.Sqr does not run on a negative number
 
 range = rangeBox.Text
 height = heightBox.Text
@@ -799,14 +807,21 @@ heightEnd = heightEndBox.Text
 heightDiff = heightEnd - height
 
 angleR = (angle / 180) * 3.14159265358979
-time = Math.Sqr((heightDiff - ((range * Math.Sin(angleR)) / Math.Cos(angleR))) / (0.5 * -accel))  ' range = xVelocity * time, so range can be substituted into s = ut + 0.5at^2
-initVelo = range / (time * Math.Cos(angleR)) ' time is substituted into range = xVelocity * time and rearranged to find value for initVelo
-xVelocity = initVelo * Math.Cos(angleR) ' Below is same as previous algorithms
-yVelocity = initVelo * Math.Sin(angleR)
-maxHeight = (yVelocity ^ 2 / (2 * accel)) + height
-timeSpecific = yVelocity / accel
-holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
-holder = excelGraph(time, yVelocity, height)
+timeTemp = (heightDiff - ((range * Math.Sin(angleR)) / Math.Cos(angleR))) / (0.5 * -accel)  ' range = xVelocity * time, so range can be substituted into s = ut + 0.5at^2
+If timeTemp < 0 Then
+    MsgBox ("Error: Cannot use these variables as it is impossible to square a negative number. Please enter different variables. The program will now close.")
+    ' ENTER A RESET FUNCTION HERE
+    Unload Me
+Else
+    time = Math.Sqr(timeTemp)
+    initVelo = range / (time * Math.Cos(angleR)) ' time is substituted into range = xVelocity * time and rearranged to find value for initVelo
+    xVelocity = initVelo * Math.Cos(angleR) ' Below is same as previous algorithms
+    yVelocity = initVelo * Math.Sin(angleR)
+    maxHeight = (yVelocity ^ 2 / (2 * accel)) + height
+    timeSpecific = yVelocity / accel
+    holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
+    holder = excelGraph(time, yVelocity, height)
+End If
 End Sub
 
 Function OutputFunc(time As Single, range As Single, initVelo As Single, xVelocity As Single, yVelocity As Single, timeSpecific As Single, angle As Single, maxHeight As Single)
