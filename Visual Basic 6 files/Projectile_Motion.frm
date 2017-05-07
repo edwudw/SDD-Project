@@ -64,6 +64,15 @@ Begin VB.Form Form1
       End
       Begin VB.TextBox Dialog3Box 
          Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00000000&
          Height          =   495
          Left            =   3120
@@ -242,6 +251,29 @@ Begin VB.Form Form1
       Top             =   120
       Visible         =   0   'False
       Width           =   23055
+      Begin VB.CommandButton resetButton 
+         Caption         =   "Reset Program"
+         Height          =   615
+         Left            =   18240
+         TabIndex        =   45
+         Top             =   10440
+         Width           =   975
+      End
+      Begin VB.CommandButton calculateButton 
+         Caption         =   "Calculate"
+         Height          =   375
+         Left            =   18240
+         TabIndex        =   44
+         Top             =   9480
+         Width           =   975
+      End
+      Begin VB.TextBox timeAtPointBox 
+         Height          =   615
+         Left            =   18240
+         TabIndex        =   41
+         Top             =   8040
+         Width           =   975
+      End
       Begin VB.PictureBox Image1 
          AutoSize        =   -1  'True
          Height          =   4695
@@ -340,6 +372,80 @@ Begin VB.Form Form1
          Text            =   "9.8"
          Top             =   6480
          Width           =   975
+      End
+      Begin VB.Label velocityAtPointBox 
+         BackColor       =   &H0000FF00&
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   615
+         Left            =   18240
+         TabIndex        =   43
+         Top             =   8760
+         Width           =   975
+      End
+      Begin VB.Label velocityAtPointEnterLabel 
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
+         Caption         =   "Velocity of object when at time above:"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   615
+         Left            =   16560
+         TabIndex        =   42
+         Top             =   8760
+         Width           =   1575
+      End
+      Begin VB.Label Label1 
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
+         Caption         =   "Time when object is moving at velocity below:"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   615
+         Left            =   16560
+         TabIndex        =   40
+         Top             =   8040
+         Width           =   1575
+      End
+      Begin VB.Label velocityAtPointLabel 
+         Alignment       =   2  'Center
+         BackColor       =   &H0000FF00&
+         Caption         =   "Calculate the object's velocity at a point of time in the projectile's motion:"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   735
+         Left            =   16560
+         TabIndex        =   39
+         Top             =   7200
+         Width           =   2655
       End
       Begin VB.Label timeLabel 
          Alignment       =   2  'Center
@@ -864,8 +970,9 @@ Next
 
 Dim xlChart As excel.Chart ' Creates excel chart
 Set xlChart = xlWkb.Charts.Add
-xlChart.ChartType = xlLine
+xlChart.ChartType = xlXYScatter ' Has to be scatter first due to bug in Excel
 xlChart.SetSourceData xlSht.range("A1:B12"), xlColumns ' Read data from workbook
+xlChart.ChartType = xlLine ' Changing data type after source data is set due to bug in Excel
 xlChart.Visible = xlSheetVisible
 xlChart.Legend.Clear
 xlChart.ChartArea.Font.Size = 10 ' Size of font on graph
@@ -879,23 +986,52 @@ xlChart.ChartArea.Copy ' Copies excel chart
 Image1.Picture = Clipboard.GetData(vbCFBitmap) ' Reads clipboard and displays picture in clipboard which is the excel chart
 End Function
 
+Private Sub calculateButton_Click()
+Dim uYVelocity As Single ' y component of initial velocity
+Dim uXVelocity As Single ' x component of initial velocity
+Dim vYVelocity As Single ' y component of overall velocity at time given
+Dim overallVelocity As Single ' overall velocity at time given
+Dim range As Single ' range of projectile
+Dim time As Single ' time given by user
+Dim accel As Single ' gravitational acceleration
+Dim totalTime As Single ' total time of projectile's motion
+
+
+uYVelocity = yVelocityBox.Text ' Sets variables from user information
+uXVelocity = xVelocityBox.Text
+range = rangeBox.Text
+time = timeAtPointBox.Text
+accel = accelBox.Text
+totalTime = timeBox.Text
+
+If IsNumeric(time) = False Or time > totalTime Or time < 0 Then ' Ensure that time given is within total time and is numeric
+    MsgBox ("Please enter a positive number.")
+Else
+    vYVelocity = uYVelocity + (time * -accel) ' v = u + at
+    overallVelocity = Math.Sqr(uXVelocity ^ 2 + vYVelocity ^ 2) ' Pythagoras theorem
+    velocityAtPointBox.Caption = overallVelocity ' Gives overallVelocity to user
+End If
+End Sub
+
 Private Sub dialogButton_Click()
-If dialogLabel.Caption = "Select either initial velocity or range and enter in the box the corresponding variable." Then
-    If Option1.Value = True Then
-        If IsNumeric(Dialog1Box.Text) = False Then
+If dialogLabel.Caption = "Select either initial velocity or range and enter in the box the corresponding variable." Then ' If first screen is shown
+    If Option1.Value = True Then ' If initial velocity is selected
+        If IsNumeric(Dialog1Box.Text) = False Then ' If non numeric character given
             MsgBox ("Please enter a positive number.")
         Else
-            initVeloBox.Text = Dialog1Box.Text
+            initVeloBox.Text = Dialog1Box.Text ' set initial velocity so that main function will pick it up
+            ' Go to next screen
             dialogLabel.Caption = "Select either time or angle and enter in the box the corresponding variable."
             Option1.Caption = "Angle (degrees)"
             Option2.Caption = "Time (seconds)"
-            Dialog1Box.Text = ""
+            Call resetBoxes
         End If
     ElseIf Option2.Value = True Then
-        If IsNumeric(Dialog2Box.Text) = False Then
+        If IsNumeric(Dialog2Box.Text) = False Then ' If non numeric character given
             MsgBox ("Please enter a positive number.")
         Else
-            rangeBox.Text = Dialog2Box.Text
+            rangeBox.Text = Dialog2Box.Text ' set range to textBox so that main function will pick it up
+            ' Go to next screen
             dialogLabel.Caption = "Select either time, angle or maximum height and enter in the box the corresponding variable."
             Option3.Enabled = True
             Option3.Visible = True
@@ -903,32 +1039,32 @@ If dialogLabel.Caption = "Select either initial velocity or range and enter in t
             Option1.Caption = "Angle (degrees)"
             Option2.Caption = "Time (seconds)"
             Option3.Caption = "Maximum Height (metres)"
-            Dialog2Box.Text = ""
+            Call resetBoxes
         End If
     Else
-        MsgBox ("Error - No option was selected.")
+        MsgBox ("Error - No option was selected.") ' If no option was selected, show error
     End If
-ElseIf dialogLabel.Caption = "Select either time or angle and enter in the box the corresponding variable." Then
-    If Option1.Value = True Then
-        If IsNumeric(Dialog1Box.Text) = False Then
+ElseIf dialogLabel.Caption = "Select either time or angle and enter in the box the corresponding variable." Then ' Screen 2, if initial velocity was selected
+    If Option1.Value = True Then ' If angle is selected
+        If IsNumeric(Dialog1Box.Text) = False Then ' Show error if non numeric character given
             MsgBox ("Please enter a positive number.")
         Else
-            angleBox.Text = Dialog1Box.Text
-            Dialog1Box.Text = ""
+            angleBox.Text = Dialog1Box.Text ' Set angle so main function will pick it up and reset boxes
+            Call resetBoxes
         End If
-    ElseIf Option2.Value = True Then
-        If IsNumeric(Dialog2Box.Text) = False Then
+    ElseIf Option2.Value = True Then ' If time is selected
+        If IsNumeric(Dialog2Box.Text) = False Then ' Show error if non numeric character given
             MsgBox ("Please enter a positive number")
         Else
-            timeBox.Text = Dialog2Box.Text
-            Dialog2Box.Text = ""
+            timeBox.Text = Dialog2Box.Text ' Set time so main function will pick it up and reset boxes
+            Call resetBoxes
         End If
     Else
         MsgBox ("Error - No option was selected")
     End If
-    optionFrame.Visible = False
-    labelFrame.Visible = True
-    Dialog1Box.Enabled = True
+    optionFrame.Visible = False ' Go to third screen
+    labelFrame.Visible = True ' Get rid of options, show Labels
+    Dialog1Box.Enabled = True ' Enable all 3 textboxes so can enter text
     Dialog2Box.Enabled = True
     Dialog3Box.Enabled = True
     Option3.Visible = True
@@ -936,7 +1072,7 @@ ElseIf dialogLabel.Caption = "Select either time or angle and enter in the box t
     dialogLabel.Caption = "Enter in the box the heights at projectile launch and landing and the gravitational acceleration."
     Dialog1Box.Text = "0"
     Dialog2Box.Text = "0"
-    Dialog3Box.Text = "9.8"
+    Dialog3Box.Text = "9.8" ' Set default values so user can press OK instead of having to enter values
 ElseIf dialogLabel.Caption = "Select either time, angle or maximum height and enter in the box the corresponding variable." Then
     If Option1.Value = True Then
         If IsNumeric(Dialog1Box.Text) = False Then
@@ -1004,4 +1140,39 @@ Private Sub Option3_Click()
 Dialog1Box.Enabled = False
 Dialog2Box.Enabled = False
 Dialog3Box.Enabled = True
+End Sub
+
+Private Sub resetButton_Click()
+Dialog1Box.Text = ""
+Dialog2Box.Text = ""
+Dialog3Box.Text = ""
+Option3.Visible = False
+Dialog3Box.Visible = False
+labelFrame.Visible = False
+optionFrame.Visible = True
+Option1.Caption = "Initial Velocity (m/s)"
+Option2.Caption = "Range (metres)"
+dialogLabel.Caption = "Select either initial velocity or range and enter in the box the corresponding variable."
+mainFrame.Visible = False
+dialogFrame.Visible = True
+
+timeBox.Text = ""
+rangeBox.Text = ""
+initVeloBox.Text = ""
+xVelocityBox.Text = ""
+yVelocityBox.Text = ""
+timeSpecificBox.Text = ""
+angleBox.Text = ""
+heightBox.Text = "0"
+heightEndBox.Text = "0"
+maxHeightBox.Text = ""
+accelBox.Text = "9.8"
+timeAtPointBox.Text = ""
+velocityAtPointBox.Caption = ""
+End Sub
+
+Private Sub resetBoxes()
+Dialog1Box.Text = ""
+Dialog2Box.Text = ""
+Dialog3Box.Text = ""
 End Sub
