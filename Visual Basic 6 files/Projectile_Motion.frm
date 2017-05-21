@@ -1071,6 +1071,8 @@ If dialogLabel.Caption = "Select either initial velocity or range and enter in t
     If Option1.Value = True Then ' If initial velocity is selected
         If IsNumeric(Dialog1Box.Text) = False Then ' If non numeric character given
             MsgBox ("Please enter a positive number.")
+        ElseIf Dialog1Box.Text < 0 Then
+            MsgBox ("Please enter a positive number.")
         Else
             initVeloBox.Text = Dialog1Box.Text ' set initial velocity so that main function will pick it up
             ' Go to next screen
@@ -1081,6 +1083,8 @@ If dialogLabel.Caption = "Select either initial velocity or range and enter in t
         End If
     ElseIf Option2.Value = True Then
         If IsNumeric(Dialog2Box.Text) = False Then ' If non numeric character given
+            MsgBox ("Please enter a positive number.")
+        ElseIf Dialog2Box.Text < 0 Then
             MsgBox ("Please enter a positive number.")
         Else
             rangeBox.Text = Dialog2Box.Text ' set range to textBox so that main function will pick it up
@@ -1107,7 +1111,7 @@ ElseIf dialogLabel.Caption = "Select either time or angle and enter in the box t
             Call resetBoxes
         End If
     ElseIf Option2.Value = True Then ' If time is selected
-        If IsNumeric(Dialog2Box.Text) = False Then ' Show error if non numeric character given
+        If IsNumeric(Dialog2Box.Text) = False Or Dialog2Box.Text < 0 Then ' Show error if non numeric character given
             MsgBox ("Please enter a positive number")
             isNumericVar = False
         Else
@@ -1137,6 +1141,9 @@ ElseIf dialogLabel.Caption = "Select either time, angle or maximum height and en
         If IsNumeric(Dialog1Box.Text) = False Then
             MsgBox ("Please enter a positive number")
             isNumericVar = False
+        ElseIf Dialog1Box.Text < 0 Then
+            MsgBox ("Please enter a positive number")
+            isNumericVar = False
         Else
             angleBox.Text = Dialog1Box.Text
             Dialog1Box.Text = ""
@@ -1145,12 +1152,18 @@ ElseIf dialogLabel.Caption = "Select either time, angle or maximum height and en
         If IsNumeric(Dialog2Box.Text) = False Then
             MsgBox ("Please enter a positive number")
             isNumericVar = False
+        ElseIf Dialog2Box.Text < 0 Then
+            MsgBox ("Please enter a positive number")
+            isNumericVar = False
         Else
             timeBox.Text = Dialog2Box.Text
             Dialog2Box.Text = ""
         End If
     ElseIf Option3.Value = True Then
         If IsNumeric(Dialog3Box.Text) = False Then
+            MsgBox ("Please enter a positive number")
+            isNumericVar = False
+        ElseIf Dialog3Box.Text < 0 Then
             MsgBox ("Please enter a positive number")
             isNumericVar = False
         Else
@@ -1175,6 +1188,8 @@ ElseIf dialogLabel.Caption = "Select either time, angle or maximum height and en
     End If
 ElseIf dialogLabel.Caption = "Enter in the box the heights at projectile launch and landing and the gravitational acceleration." Then ' Third screen
     If IsNumeric(Dialog1Box.Text) = False Or IsNumeric(Dialog2Box.Text) = False Or IsNumeric(Dialog3Box.Text) = False Then ' This works as values are preset
+        MsgBox ("Please enter a positive number")
+    ElseIf Dialog1Box.Text < 0 Or Dialog2Box.Text < 0 Or Dialog3Box.Text < 0 Then
         MsgBox ("Please enter a positive number")
     Else
         heightBox.Text = Dialog1Box.Text ' Set variables to input given
