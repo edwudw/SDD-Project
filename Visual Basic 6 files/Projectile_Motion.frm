@@ -285,55 +285,78 @@ Begin VB.Form Form1
          Width           =   11775
       End
       Begin VB.TextBox timeBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   11
          Top             =   360
          Width           =   975
       End
       Begin VB.TextBox rangeBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   10
          Top             =   960
          Width           =   975
       End
       Begin VB.TextBox initVeloBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   9
          Top             =   1560
          Width           =   975
       End
       Begin VB.TextBox xVelocityBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   615
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   8
          Top             =   2160
          Width           =   975
       End
       Begin VB.TextBox yVelocityBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   7
          Top             =   2880
          Width           =   975
       End
       Begin VB.TextBox timeSpecificBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   6
          Top             =   3480
          Width           =   975
       End
       Begin VB.TextBox angleBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   615
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   5
          Top             =   4080
          Width           =   975
       End
       Begin VB.TextBox heightBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          BeginProperty DataFormat 
             Type            =   0
             Format          =   "0"
@@ -345,29 +368,39 @@ Begin VB.Form Form1
          EndProperty
          Height          =   495
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   4
          Text            =   "0"
          Top             =   4800
          Width           =   975
       End
       Begin VB.TextBox heightEndBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   3
          Text            =   "0"
          Top             =   5400
          Width           =   975
       End
       Begin VB.TextBox maxHeightBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   375
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   2
          Top             =   6000
          Width           =   975
       End
       Begin VB.TextBox accelBox 
+         BackColor       =   &H0000FF00&
+         BorderStyle     =   0  'None
          Height          =   375
          Left            =   18240
+         Locked          =   -1  'True
          TabIndex        =   1
          Text            =   "9.8"
          Top             =   6480
@@ -963,7 +996,7 @@ Function excelGraph(time As Single, yVelocity As Single, height As Single)
 Dim xlApp As excel.Application ' Below are required variables needed for working with Excel
 Set xlApp = New excel.Application ' Instance of Excel application created and set
 Dim xlWkb As excel.Workbook ' Instance of an Excel workbook created and set
-Set xlWkb = xlApp.Workbooks.Open(CurDir() + "\Book1.xlsx")
+Set xlWkb = xlApp.Workbooks.Open(CurDir() + "\Required_Excel_File.xlsx")
 Dim xlSht As excel.Worksheet
 Set xlSht = xlWkb.Worksheets(1) ' Instance of an Excel worksheet within the workbook created and set
 
@@ -1044,7 +1077,7 @@ If dialogLabel.Caption = "Select either initial velocity or range and enter in t
             dialogLabel.Caption = "Select either time or angle and enter in the box the corresponding variable."
             Option1.Caption = "Angle (degrees)"
             Option2.Caption = "Time (seconds)"
-            Call resetBoxes
+            Call resetBoxes ' Shortens amount of code that is copied
         End If
     ElseIf Option2.Value = True Then
         If IsNumeric(Dialog2Box.Text) = False Then ' If non numeric character given
@@ -1084,7 +1117,7 @@ ElseIf dialogLabel.Caption = "Select either time or angle and enter in the box t
     Else
         MsgBox ("Error - No option was selected")
     End If
-    If isNumericVar = True Then
+    If isNumericVar = True Then ' Needed to ensure that a numeric character is entered.
         optionFrame.Visible = False ' Go to third screen
         labelFrame.Visible = True ' Get rid of options, show Labels
         Dialog1Box.Enabled = True ' Enable all 3 textboxes so can enter text
@@ -1097,10 +1130,10 @@ ElseIf dialogLabel.Caption = "Select either time or angle and enter in the box t
         Dialog2Box.Text = "0"
         Dialog3Box.Text = "9.8" ' Set default values so user can press OK instead of having to enter values
     Else
-        isNumericVar = True
+        isNumericVar = True ' Reset error check
     End If
-ElseIf dialogLabel.Caption = "Select either time, angle or maximum height and enter in the box the corresponding variable." Then
-    If Option1.Value = True Then
+ElseIf dialogLabel.Caption = "Select either time, angle or maximum height and enter in the box the corresponding variable." Then ' If range is selected
+    If Option1.Value = True Then ' Repeat of above with different variables
         If IsNumeric(Dialog1Box.Text) = False Then
             MsgBox ("Please enter a positive number")
             isNumericVar = False
@@ -1140,42 +1173,42 @@ ElseIf dialogLabel.Caption = "Select either time, angle or maximum height and en
     Else
         isNumericVar = True
     End If
-ElseIf dialogLabel.Caption = "Enter in the box the heights at projectile launch and landing and the gravitational acceleration." Then
-    If IsNumeric(Dialog1Box.Text) = False Or IsNumeric(Dialog2Box.Text) = False Or IsNumeric(Dialog3Box.Text) = False Then
+ElseIf dialogLabel.Caption = "Enter in the box the heights at projectile launch and landing and the gravitational acceleration." Then ' Third screen
+    If IsNumeric(Dialog1Box.Text) = False Or IsNumeric(Dialog2Box.Text) = False Or IsNumeric(Dialog3Box.Text) = False Then ' This works as values are preset
         MsgBox ("Please enter a positive number")
     Else
-        heightBox.Text = Dialog1Box.Text
+        heightBox.Text = Dialog1Box.Text ' Set variables to input given
         heightEndBox.Text = Dialog2Box.Text
         accelBox.Text = Dialog3Box.Text
         dialogFrame.Visible = False
-        Call mainFunc
-        mainFrame.Visible = True
+        Call mainFunc ' Call the main function to calculate all other variables and display the graph
+        mainFrame.Visible = True ' Show the main screen after graph has loaded
     End If
 Else
-    MsgBox ("Error - dialogLabel has been edited.")
+    MsgBox ("Error - dialogLabel has been edited.") ' This error in theory should never appear, added so the program will not crash.
 End If
     
 End Sub
 
-Private Sub Option1_Click()
+Private Sub Option1_Click() ' So users will not attempt to type in other boxes
 Dialog1Box.Enabled = True
 Dialog2Box.Enabled = False
 Dialog3Box.Enabled = False
 End Sub
 
-Private Sub Option2_Click()
+Private Sub Option2_Click() ' Same as above
 Dialog1Box.Enabled = False
 Dialog2Box.Enabled = True
 Dialog3Box.Enabled = False
 End Sub
 
-Private Sub Option3_Click()
+Private Sub Option3_Click() ' Same as above
 Dialog1Box.Enabled = False
 Dialog2Box.Enabled = False
 Dialog3Box.Enabled = True
 End Sub
 
-Private Sub resetButton_Click()
+Private Sub resetButton_Click() ' To reset the whole program, added so the user does not have to reopen the program
 Dialog1Box.Text = ""
 Dialog2Box.Text = ""
 Dialog3Box.Text = ""
@@ -1204,7 +1237,7 @@ timeAtPointBox.Text = ""
 velocityAtPointBox.Caption = ""
 End Sub
 
-Private Sub resetBoxes()
+Private Sub resetBoxes() ' Resets user input boxes
 Dialog1Box.Text = ""
 Dialog2Box.Text = ""
 Dialog3Box.Text = ""
