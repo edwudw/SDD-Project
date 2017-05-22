@@ -7,7 +7,7 @@ Begin VB.Form Form1
    ClientWidth     =   12870
    LinkTopic       =   "Form1"
    ScaleHeight     =   10215
-   ScaleWidth      =   12870
+   ScaleWidth      =   18960
    StartUpPosition =   3  'Windows Default
    WindowState     =   2  'Maximized
    Begin VB.Frame dialogFrame 
