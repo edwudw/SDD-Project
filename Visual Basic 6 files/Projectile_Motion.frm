@@ -1,13 +1,14 @@
 VERSION 5.00
 Begin VB.Form Form1 
    BackColor       =   &H00000000&
+   Caption         =   "Projectile Motion Analyser"
    ClientHeight    =   10215
    ClientLeft      =   225
    ClientTop       =   570
    ClientWidth     =   12870
    LinkTopic       =   "Form1"
    ScaleHeight     =   10215
-   ScaleWidth      =   18960
+   ScaleWidth      =   12870
    StartUpPosition =   3  'Windows Default
    WindowState     =   2  'Maximized
    Begin VB.Frame dialogFrame 
@@ -56,6 +57,7 @@ Begin VB.Form Form1
       End
       Begin VB.CommandButton dialogButton 
          Caption         =   "OK"
+         Default         =   -1  'True
          Height          =   375
          Left            =   4320
          TabIndex        =   34
@@ -243,12 +245,12 @@ Begin VB.Form Form1
       End
    End
    Begin VB.Frame mainFrame 
-      BackColor       =   &H0000FF00&
+      BackColor       =   &H00F0AF00&
       BorderStyle     =   0  'None
       Height          =   11295
-      Left            =   120
+      Left            =   0
       TabIndex        =   0
-      Top             =   120
+      Top             =   0
       Visible         =   0   'False
       Width           =   23055
       Begin VB.CommandButton resetButton 
@@ -285,7 +287,7 @@ Begin VB.Form Form1
          Width           =   11775
       End
       Begin VB.TextBox timeBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
@@ -295,7 +297,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox rangeBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
@@ -305,7 +307,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox initVeloBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
@@ -315,7 +317,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox xVelocityBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   615
          Left            =   18240
@@ -325,7 +327,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox yVelocityBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
@@ -335,7 +337,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox timeSpecificBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
@@ -345,7 +347,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox angleBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   615
          Left            =   18240
@@ -355,7 +357,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox heightBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          BeginProperty DataFormat 
             Type            =   0
@@ -375,7 +377,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox heightEndBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   495
          Left            =   18240
@@ -386,7 +388,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox maxHeightBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   375
          Left            =   18240
@@ -396,7 +398,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.TextBox accelBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BorderStyle     =   0  'None
          Height          =   375
          Left            =   18240
@@ -407,7 +409,7 @@ Begin VB.Form Form1
          Width           =   975
       End
       Begin VB.Label timeAxisLabel 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Time"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -425,7 +427,7 @@ Begin VB.Form Form1
          Width           =   2535
       End
       Begin VB.Label velocityAtPointBox 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -443,7 +445,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label velocityAtPointEnterLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Velocity of object when at time above:"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -462,7 +464,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label Label1 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Time when object is moving at velocity below:"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -481,7 +483,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label velocityAtPointLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Calculate the object's velocity at a point of time in the projectile's motion:"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -500,7 +502,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label timeLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Time"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -520,7 +522,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label rangeLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Range"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -540,7 +542,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label velocityLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Initial Velocity"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -560,7 +562,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label xVelocityLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "X Component of Initial Velocity (Ux)"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -580,7 +582,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label yVelocityLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Y Component of Initial Velocity (Uy)"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -599,7 +601,7 @@ Begin VB.Form Form1
          Width           =   1575
       End
       Begin VB.Label timeSpecificLabel 
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Time at Max height"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -619,7 +621,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label angleLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Angle above Horizontal which Projectile was fired (in degrees)"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -639,7 +641,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label heightLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Height at projectile launch"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -659,7 +661,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label heightEndLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Height at projectile landing"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -679,7 +681,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label maxHeightLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Maximum Height"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -699,7 +701,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label accelLabel 
          Alignment       =   2  'Center
-         BackColor       =   &H0000FF00&
+         BackColor       =   &H00F0AF00&
          Caption         =   "Acceleration"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -825,7 +827,7 @@ holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, a
 holder = excelGraph(time, yVelocity, height) ' Outputs some variables to Graph function to display graph
 End Sub
 
-Private Sub Algorithm2() ' include heightEnd and heightDiff
+Private Sub Algorithm2()
 Dim timeSpecific As Single
 Dim initVelo As Single
 Dim angle As Single
@@ -837,6 +839,8 @@ Dim timeSpecific2 As Single
 Dim maxHeight As Single
 Dim time As Single
 Dim range As Single
+Dim heightEnd As Single
+Dim heightDiff As Single
 Dim divisor As Single ' temporary variable required to calculate inverse sin
 Dim accel As Single
 Dim tempAngle As Single ' required to ensure negative number is not square rooted
@@ -844,14 +848,15 @@ height = heightBox.Text
 initVelo = initVeloBox.Text
 time = timeBox.Text
 accel = accelBox.Text
+heightEnd = heightEndBox.Text
+heightDiff = heightEnd - height
 
-yVelocity = (((-1) * height) - (0.5 * -accel * time ^ 2)) / time ' Rearrange s = ut + 0.5at^2
+yVelocity = (heightDiff - (0.5 * -accel * time ^ 2)) / time ' Rearrange s = ut + 0.5at^2
 divisor = yVelocity / initVelo ' inverse sin of yVelocity / initVelo will find angle
 tempAngle = -divisor * divisor + 1
 If tempAngle < 0 Then
     MsgBox ("Please use other variables. These variables will return an error as a negative number cannot be square rooted. The program will now close.")
     Unload Me
-    ' Insert reset function here
 Else
     angleR = Math.Atn(divisor / (-divisor * divisor + 1) ^ 0.5) ' VB6 does not support inverse sin, so inverse tan required to calculate inverse sin
     angle = (angleR * 180) / 3.1415926
@@ -864,7 +869,7 @@ Else
 End If
 End Sub
 
-Private Sub Algorithm3()
+Private Sub Algorithm3()  ' If range and time are selected
 
 Dim timeSpecific As Single
 Dim initVelo As Single
@@ -967,7 +972,6 @@ angleR = (angle / 180) * 3.14159265358979
 timeTemp = (heightDiff - ((range * Math.Sin(angleR)) / Math.Cos(angleR))) / (0.5 * -accel)  ' range = xVelocity * time, so range can be substituted into s = ut + 0.5at^2
 If timeTemp < 0 Then
     MsgBox ("Error: Cannot use these variables as it is impossible to square a negative number. Please enter different variables. The program will now close.")
-    ' ENTER A RESET FUNCTION HERE
     Unload Me
 Else
     time = Math.Sqr(timeTemp)
@@ -1056,7 +1060,7 @@ accel = accelBox.Text
 totalTime = timeBox.Text
 
 If IsNumeric(time) = False Or time > totalTime Or time < 0 Then ' Ensure that time given is within total time and is numeric
-    MsgBox ("Please enter a positive number.")
+    MsgBox ("Please enter a positive number that is less than " + CStr(totalTime) + ".")
 Else
     vYVelocity = uYVelocity + (time * -accel) ' v = u + at
     overallVelocity = Math.Sqr(uXVelocity ^ 2 + vYVelocity ^ 2) ' Pythagoras theorem
@@ -1198,6 +1202,7 @@ ElseIf dialogLabel.Caption = "Enter in the box the heights at projectile launch 
         dialogFrame.Visible = False
         Call mainFunc ' Call the main function to calculate all other variables and display the graph
         mainFrame.Visible = True ' Show the main screen after graph has loaded
+        dialogButton.Default = False
     End If
 Else
     MsgBox ("Error - dialogLabel has been edited.") ' This error in theory should never appear, added so the program will not crash.
@@ -1257,3 +1262,4 @@ Dialog1Box.Text = ""
 Dialog2Box.Text = ""
 Dialog3Box.Text = ""
 End Sub
+
