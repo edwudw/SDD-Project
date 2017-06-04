@@ -929,10 +929,12 @@ range = rangeBox.Text
 maxHeight = maxHeightBox.Text
 height = heightBox.Text
 accel = accelBox.Text
+heightEnd = heightEndBox.Text
+heightDiff = height - heightEnd
 
 yVelocity = Math.Sqr(2 * accel * maxHeight) ' v^2 = u^2 + 2as except v = 0 at max height, so is u^2 = -2as rearranged
 timeSpecific = yVelocity / accel
-timeSpecific2 = Math.Sqr((height + maxHeight) / (0.5 * accel)) ' s = ut + 0.5at^2 except u = 0 at maxHeight
+timeSpecific2 = Math.Sqr((heightDiff + maxHeight) / (0.5 * accel)) ' s = ut + 0.5at^2 except u = 0 at maxHeight
 time = timeSpecific + timeSpecific2 ' Below is same as previous algorithms
 xVelocity = range / time
 angleR = Math.Atn(yVelocity / xVelocity)
@@ -971,7 +973,7 @@ heightDiff = heightEnd - height
 angleR = (angle / 180) * 3.14159265358979
 timeTemp = (heightDiff - ((range * Math.Sin(angleR)) / Math.Cos(angleR))) / (0.5 * -accel)  ' range = xVelocity * time, so range can be substituted into s = ut + 0.5at^2
 If timeTemp < 0 Then
-    MsgBox ("Error: Cannot use these variables as it is impossible to square a negative number. Please enter different variables. The program will now close.")
+    MsgBox ("Error: Cannot use these variables as it is impossible to square root a negative number. Please enter different variables. The program will now close.")
     Unload Me
 Else
     time = Math.Sqr(timeTemp)
