@@ -20,6 +20,14 @@ Begin VB.Form Form1
       TabIndex        =   24
       Top             =   3120
       Width           =   7695
+      Begin VB.CommandButton help1Button 
+         Caption         =   "Help"
+         Height          =   375
+         Left            =   3120
+         TabIndex        =   47
+         Top             =   5160
+         Width           =   975
+      End
       Begin VB.TextBox Dialog1Box 
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -241,7 +249,7 @@ Begin VB.Form Form1
          Left            =   600
          TabIndex        =   37
          Top             =   600
-         Width           =   4215
+         Width           =   4575
       End
    End
    Begin VB.Frame mainFrame 
@@ -253,6 +261,14 @@ Begin VB.Form Form1
       Top             =   0
       Visible         =   0   'False
       Width           =   23055
+      Begin VB.CommandButton help2Button 
+         Caption         =   "Help"
+         Height          =   615
+         Left            =   17160
+         TabIndex        =   48
+         Top             =   10440
+         Width           =   855
+      End
       Begin VB.CommandButton resetButton 
          Caption         =   "Reset Program"
          Height          =   615
@@ -1210,6 +1226,14 @@ Else
     MsgBox ("Error - dialogLabel has been edited.") ' This error in theory should never appear, added so the program will not crash.
 End If
     
+End Sub
+
+Private Sub help1Button_Click()
+MsgBox ("Go to https://github.com/spider93287/SDD-Project/wiki to view help. A shortcut link has been provided in the application folder.")
+End Sub
+
+Private Sub help2Button_Click()
+MsgBox ("Go to https://github.com/spider93287/SDD-Project/wiki to view help. A shortcut link has been provided in the application folder.")
 End Sub
 
 Private Sub Option1_Click() ' So users will not attempt to type in other boxes
