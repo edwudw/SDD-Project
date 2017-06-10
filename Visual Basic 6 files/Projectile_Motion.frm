@@ -424,6 +424,15 @@ Begin VB.Form Form1
          Top             =   6480
          Width           =   975
       End
+      Begin VB.Label noGraphLabel 
+         BackColor       =   &H00F0AF00&
+         Caption         =   "The graph would be displayed here."
+         Height          =   495
+         Left            =   5160
+         TabIndex        =   49
+         Top             =   5160
+         Width           =   2295
+      End
       Begin VB.Label timeAxisLabel 
          BackColor       =   &H00F0AF00&
          Caption         =   "Time"
@@ -1015,50 +1024,55 @@ maxHeightBox.Text = maxHeight
 End Function
 
 Function excelGraph(time As Single, yVelocity As Single, height As Single)
-Dim xlApp As excel.Application ' Below are required variables needed for working with Excel
-Set xlApp = New excel.Application ' Instance of Excel application created and set
-Dim xlWkb As excel.Workbook ' Instance of an Excel workbook created and set
-Set xlWkb = xlApp.Workbooks.Open(CurDir() + "\Required_Excel_File.xlsx")
-Dim xlSht As excel.Worksheet
-Set xlSht = xlWkb.Worksheets(1) ' Instance of an Excel worksheet within the workbook created and set
-
-
-Dim timeInterval As Single
-Dim i As Integer
-Dim times(9) As Single
-Dim heights(9) As Single
-timeInterval = time / 10 ' finds amount of time between each time interval (required to set points on the graph)
-For i = 0 To 9
-    times(i) = timeInterval * (i + 1) ' create 10 points of time with interval between each point
-    heights(i) = (yVelocity * times(i)) + (0.5 * -(accelBox.Text) * times(i) ^ 2) ' uses s = ut + 0.5at^2 to find height at each point of time
-Next
-xlSht.Cells(1, 1).Value = "Time" ' Adding data to the excel workbook including all times and heights
-xlSht.Cells(1, 2).Value = "Height"
-xlSht.Cells(2, 1).Value = 0
-xlSht.Cells(2, 2).Value = height
-For i = 3 To 12
-    xlSht.Cells(i, 1).Value = times(i - 3)
-    xlSht.Cells(i, 2).Value = heights(i - 3) + height
-Next
-
-Dim xlChart As excel.Chart ' Creates excel chart
-Set xlChart = xlWkb.Charts.Add
-xlChart.ChartType = xlXYScatter ' Has to be scatter first due to bug in Excel
-xlChart.SetSourceData xlSht.range("A1:B12"), xlColumns ' Read data from workbook
-xlChart.ChartType = xlLine ' Changing data type after source data is set due to bug in Excel
-xlChart.Visible = xlSheetVisible
-xlChart.Legend.Clear
-xlChart.ChartArea.Font.Size = 10 ' Size of font on graph
-xlChart.ChartArea.Font.Color = vbRed ' Color of font on graph
-For i = 1 To xlChart.FullSeriesCollection.Count
-    xlChart.FullSeriesCollection(i).Smooth = True ' Makes line connecting points on graph curved
-Next
-
-xlChart.ChartArea.Select
-xlChart.ChartArea.Copy ' Copies excel chart
-Image1.Picture = Clipboard.GetData(vbCFBitmap) ' Reads clipboard and displays picture in clipboard which is the excel chart
+Dim x As Integer
+On Error GoTo noExcelGraph ' In case graph does not work on school computers
+    Dim xlApp As excel.Application ' Below are required variables needed for working with Excel
+    Set xlApp = New excel.Application ' Instance of Excel application created and set
+    Dim xlWkb As excel.Workbook ' Instance of an Excel workbook created and set
+    Set xlWkb = xlApp.Workbooks.Open(CurDir() + "\Required_Excel_File.xlsx")
+    Dim xlSht As excel.Worksheet
+    Set xlSht = xlWkb.Worksheets(1) ' Instance of an Excel worksheet within the workbook created and set
+    
+    
+    Dim timeInterval As Single
+    Dim i As Integer
+    Dim times(9) As Single
+    Dim heights(9) As Single
+    timeInterval = time / 10 ' finds amount of time between each time interval (required to set points on the graph)
+    For i = 0 To 9
+        times(i) = timeInterval * (i + 1) ' create 10 points of time with interval between each point
+        heights(i) = (yVelocity * times(i)) + (0.5 * -(accelBox.Text) * times(i) ^ 2) ' uses s = ut + 0.5at^2 to find height at each point of time
+    Next
+    xlSht.Cells(1, 1).Value = "Time" ' Adding data to the excel workbook including all times and heights
+    xlSht.Cells(1, 2).Value = "Height"
+    xlSht.Cells(2, 1).Value = 0
+    xlSht.Cells(2, 2).Value = height
+    For i = 3 To 12
+        xlSht.Cells(i, 1).Value = times(i - 3)
+        xlSht.Cells(i, 2).Value = heights(i - 3) + height
+    Next
+    
+    Dim xlChart As excel.Chart ' Creates excel chart
+    Set xlChart = xlWkb.Charts.Add
+    xlChart.ChartType = xlXYScatter ' Has to be scatter first due to bug in Excel
+    xlChart.SetSourceData xlSht.range("A1:B12"), xlColumns ' Read data from workbook
+    xlChart.ChartType = xlLine ' Changing data type after source data is set due to bug in Excel
+    xlChart.Visible = xlSheetVisible
+    xlChart.Legend.Clear
+    xlChart.ChartArea.Font.Size = 10 ' Size of font on graph
+    xlChart.ChartArea.Font.Color = vbRed ' Color of font on graph
+    For i = 1 To xlChart.FullSeriesCollection.Count
+        xlChart.FullSeriesCollection(i).Smooth = True ' Makes line connecting points on graph curved
+    Next
+    
+    xlChart.ChartArea.Select
+    xlChart.ChartArea.Copy ' Copies excel chart
+    Image1.Picture = Clipboard.GetData(vbCFBitmap) ' Reads clipboard and displays picture in clipboard which is the excel chart
+Exit Function
+noExcelGraph:
+    MsgBox ("The excel graph could not load. The program will now continue without loading the excel graph. This error is most likely caused by either Excel 2010 and above not being installed, or a lack of administrator privileges.")
+    Image1.Visible = False
 End Function
-
 Private Sub calculateButton_Click()
 Dim uYVelocity As Single ' y component of initial velocity
 Dim uXVelocity As Single ' x component of initial velocity
