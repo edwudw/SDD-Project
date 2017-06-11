@@ -827,6 +827,8 @@ Dim angle As Single
 Dim xVelocity As Single ' horizontal component of INITIAL velocity of projectile
 Dim yVelocity As Single ' vertical component of INITIAL velocity of projectile
 Dim height As Single
+Dim heightEnd As Single
+Dim heightDiff As Single
 Dim timeSpecific2 As Single ' time taken between reaching maximum height and landing of projectile
 Dim maxHeight As Single
 Dim time As Single
@@ -836,6 +838,8 @@ Dim angleR As Single
 Dim holder ' Due to Visual Baic 6 limitations, an empty variable is required to call functions
 
 height = heightBox.Text ' Getting variables from user
+heightEnd = heightEndBox.Text
+heightDiff = height - heightEnd
 initVelo = initVeloBox.Text
 angle = angleBox.Text
 accel = accelBox.Text
@@ -845,11 +849,16 @@ xVelocity = initVelo * Math.Cos(angleR) ' The Math.Cos and Math.Sin functions re
 yVelocity = initVelo * Math.Sin(angleR) ' Uses Sin and Cos to find horizontal and vertical components of initial velocity
 maxHeight = (yVelocity ^ 2 / (2 * accel)) + height ' rearranges v^2 = u^2 + 2as to find maxHeight (v is 0 at maxHeight)
 timeSpecific = yVelocity / accel ' as v is 0 at maxHeight, v = u + at becomes t = u / a
-timeSpecific2 = (maxHeight / (0.5 * accel)) ^ (1 / 2) ' If only journey after maxHeight is considered, u in s = ut + 0.5at^2 is 0
-time = timeSpecific + timeSpecific2 ' time before maxHeight is reached and time after, when added, becomes total time of journey
-range = xVelocity * time ' One of equations of projectile motion
-holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight) ' outputs all variables to user
-holder = excelGraph(time, yVelocity, height) ' Outputs some variables to Graph function to display graph
+On Error GoTo errorFunc
+    timeSpecific2 = Math.Sqr((heightDiff + maxHeight) / (0.5 * accel)) ' If only journey after maxHeight is considered, u in s = ut + 0.5at^2 is 0
+    time = timeSpecific + timeSpecific2 ' time before maxHeight is reached and time after, when added, becomes total time of journey
+    range = xVelocity * time ' One of equations of projectile motion
+    holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight) ' outputs all variables to user
+    holder = excelGraph(time, yVelocity, height) ' Outputs some variables to Graph function to display graph
+Exit Sub
+errorFunc:
+    MsgBox ("Please enter other variables. Your landing height cannot be greater than the projectile's maximum height. The program will now close.")
+    Unload Me
 End Sub
 
 Private Sub Algorithm2()
@@ -959,14 +968,19 @@ heightDiff = height - heightEnd
 
 yVelocity = Math.Sqr(2 * accel * maxHeight) ' v^2 = u^2 + 2as except v = 0 at max height, so is u^2 = -2as rearranged
 timeSpecific = yVelocity / accel
-timeSpecific2 = Math.Sqr((heightDiff + maxHeight) / (0.5 * accel)) ' s = ut + 0.5at^2 except u = 0 at maxHeight
-time = timeSpecific + timeSpecific2 ' Below is same as previous algorithms
-xVelocity = range / time
-angleR = Math.Atn(yVelocity / xVelocity)
-angle = (angleR * 180) / 3.1415926
-initVelo = ((xVelocity ^ 2) + (yVelocity ^ 2)) ^ 0.5
-holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
-holder = excelGraph(time, yVelocity, height)
+On Error GoTo errorFunc2
+    timeSpecific2 = Math.Sqr((heightDiff + maxHeight) / (0.5 * accel)) ' s = ut + 0.5at^2 except u = 0 at maxHeight
+    time = timeSpecific + timeSpecific2 ' Below is same as previous algorithms
+    xVelocity = range / time
+    angleR = Math.Atn(yVelocity / xVelocity)
+    angle = (angleR * 180) / 3.1415926
+    initVelo = ((xVelocity ^ 2) + (yVelocity ^ 2)) ^ 0.5
+    holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight)
+    holder = excelGraph(time, yVelocity, height)
+Exit Sub
+errorFunc2:
+    MsgBox ("Please enter other variables. Your landing height cannot be greater than your maximum height. The program will now close.")
+    Unload Me
 End Sub
 
 Private Sub Algorithm5()
@@ -1068,6 +1082,10 @@ On Error GoTo noExcelGraph ' In case graph does not work on school computers
     xlChart.ChartArea.Select
     xlChart.ChartArea.Copy ' Copies excel chart
     Image1.Picture = Clipboard.GetData(vbCFBitmap) ' Reads clipboard and displays picture in clipboard which is the excel chart
+    xlWkb.Saved = True ' Stops Excel from crashing before quitting
+    xlWkb.Close ' Quits Excel so it doesnt stay open in Task Manager after program has quit
+    xlApp.Quit
+    DoEvents
 Exit Function
 noExcelGraph:
     MsgBox ("The excel graph could not load. The program will now continue without loading the excel graph. This error is most likely caused by either Excel 2010 and above not being installed, or a lack of administrator privileges.")
@@ -1302,4 +1320,3 @@ Dialog1Box.Text = ""
 Dialog2Box.Text = ""
 Dialog3Box.Text = ""
 End Sub
-
