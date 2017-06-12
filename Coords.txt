@@ -1,8 +1,0 @@
-Coords for SDD Project:
-
-0 point of graph: 1575, 6225
-top point of y-graph: 1575, 600
-right-most point of x-graph: 7200, 6225
-
-Total distance along any axis: 5625
-Space between 2 points on x/y axis: 625
