@@ -800,7 +800,6 @@ ElseIf range <> "" Then ' All projectile motion questions either give range or i
     ElseIf angle <> "" Then
         Call Algorithm5
     ElseIf maxHeight <> "" Then
-        
         Call Algorithm4
     Else
         MsgBox ("Cannot solve projectile motion problem. Please enter more variables.")
@@ -850,7 +849,7 @@ yVelocity = initVelo * Math.Sin(angleR) ' Uses Sin and Cos to find horizontal an
 maxHeight = (yVelocity ^ 2 / (2 * accel)) + height ' rearranges v^2 = u^2 + 2as to find maxHeight (v is 0 at maxHeight)
 timeSpecific = yVelocity / accel ' as v is 0 at maxHeight, v = u + at becomes t = u / a
 On Error GoTo errorFunc
-    timeSpecific2 = Math.Sqr((heightDiff + maxHeight) / (0.5 * accel)) ' If only journey after maxHeight is considered, u in s = ut + 0.5at^2 is 0
+    timeSpecific2 = Math.Sqr((heightDiff + maxHeight - height) / (0.5 * accel)) ' If only journey after maxHeight is considered, u in s = ut + 0.5at^2 is 0
     time = timeSpecific + timeSpecific2 ' time before maxHeight is reached and time after, when added, becomes total time of journey
     range = xVelocity * time ' One of equations of projectile motion
     holder = OutputFunc(time, range, initVelo, xVelocity, yVelocity, timeSpecific, angle, maxHeight) ' outputs all variables to user
